@@ -13,7 +13,7 @@ This website is meant for creating forms and sharing them with others. It focuse
 
 ## Techniques
 
-**Client side:** React.js + Hooks
+**Client side:** React.js, Next.js + Hooks
 
 **Server side:** Node.js, Express.js, Mongoose, MongoDB
 
