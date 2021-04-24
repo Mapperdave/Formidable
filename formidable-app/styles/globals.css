@@ -6,22 +6,25 @@ body {
     Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   line-height: 1.6;
   font-size: 18px;
+  height: 100%;
+  position:relative;
 }
 
 * {
   box-sizing: border-box;
 }
 
+header a {
+  color: black;
+}
+header a:hover {
+  text-decoration: none;
+}
+
 a {
   color: #0070f3;
   text-decoration: none;
 }
-
 a:hover {
   text-decoration: underline;
-}
-
-img {
-  max-width: 100%;
-  display: block;
 }

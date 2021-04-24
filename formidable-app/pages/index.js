@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Date from '../components/date'
 import Layout, { siteTitle } from '../components/layout'
 import utilStyles from '../styles/utils.module.css'
+import styles from '../styles/Home.module.css'
 import { getSortedPostsData } from '../lib/posts'
 
 export async function getStaticProps() {
@@ -22,13 +23,15 @@ export default function Home({ allPostsData }) {
       <Head>
         <title>{siteTitle}</title>
       </Head>
-      <section className={utilStyles.headingMd}>
-        <p>[Your Self Introduction]</p>
-        <p>
-          (This is a sample website - you’ll be building a site like this on{' '}
-          <Link href="/posts/first-post"><a>our Next.js tutorial</a></Link>.)
-        </p>
-      </section>
+      <div className={styles.authenticationBox}>
+        <div className={styles.authenticationHeaders}>
+          <h1>Log In</h1>
+          <h1>Sign Up</h1>
+        </div>
+        <div className={styles.logInContent}>
+          <p>hej</p>
+        </div>
+      </div>
       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
         <h2 className={utilStyles.headingLg}>Blog</h2>
         <ul className={utilStyles.list}>
