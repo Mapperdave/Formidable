@@ -3,18 +3,40 @@ import Image from 'next/image'
 import styles from './layout.module.css'
 import utilStyles from '../styles/utils.module.css'
 import Link from 'next/link'
+import { signIn, signOut, useSession } from 'next-auth/client';
 
 const name = 'FORMidable'
 export const siteTitle = 'FORMidable'
 
-export default function Layout({ children, home }) {
+export default function Layout({ children, home, activeSession }) {
   return (
     <div className={styles.container}>
       <Head>
         
       </Head>
       <header>
-        {home ? (
+        <div className={styles.globalHeader}>
+          {!home ? (
+            <Link href="/">
+              <a>
+                <h2 className={utilStyles.headingLg}>{name}</h2>
+              </a>
+            </Link>
+          ) : (
+            <div/>
+          )}
+          {!activeSession ? (
+            <div className={styles.signInButtonDiv}>
+              <button className={styles.signInButton} onClick={signIn}>Sign in</button>
+              <p>/</p>
+              <button className={styles.signUpButton}>Sign up</button>
+            </div>
+          ) : (
+            <button className={styles.signInButton} onClick={signOut}>Sign out</button>
+          )}
+        </div>
+
+        {home && (
           <div className={styles.homeHeader}>
             <Image
               priority
@@ -29,15 +51,8 @@ export default function Layout({ children, home }) {
               <p>This is a website meant for creating and sharing forms</p>
             </div>
           </div>
-        ) : (
-          <>
-            <Link href="/">
-              <a>
-                <h2 className={utilStyles.headingLg, styles.smallHeaderText}>{name}</h2>
-              </a>
-            </Link>
-          </>  
         )}
+        
       </header>
       <main>{children}</main>
       {!home && (

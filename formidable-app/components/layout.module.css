@@ -1,7 +1,5 @@
 .container {
-  max-width: 90%;
-  padding: 0 1rem;
-  margin: 3rem auto 6rem;
+  width: 100%;
   height: 100%;
 }
   
@@ -10,8 +8,9 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 22rem;
+
   position: relative;
+  height: 22rem;
 }
 .homeHeader img {
   filter: opacity(90%);
@@ -24,8 +23,48 @@
   display: flex;
 }
 
-.smallHeaderText {
+.globalHeader {
+  height: 2rem;
+  margin-bottom: 1rem;
+
+  flex-direction: row;
+  justify-content: space-between;
+  display: flex;
+}
+.globalHeader h2 {
   color: #f5c69c;
+  margin: 0;
+}
+.globalHeader button {
+  height: 100%;
+  width: 4rem;
+
+  border-radius: 0.2rem;
+  border-width: 1px;
+  border-style: solid;
+}
+
+.signInButtonDiv {
+  height: 100%;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+}
+.signInButtonDiv p {
+  font-size: 1.4rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
+}
+.signInButton {
+  background-color: lightgray;
+  border-color: black;
+}
+.signUpButton {
+  background-color: white;
+  border-color: gray;
+  color: gray;
 }
   
 .backToHome {

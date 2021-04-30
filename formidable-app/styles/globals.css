@@ -14,11 +14,22 @@ body {
   box-sizing: border-box;
 }
 
+header {
+  margin: 1rem;
+}
 header a {
   color: black;
 }
 header a:hover {
   text-decoration: none;
+}
+
+main {
+  margin: 1rem;
+}
+
+footer {
+  margin: 1rem;
 }
 
 a {

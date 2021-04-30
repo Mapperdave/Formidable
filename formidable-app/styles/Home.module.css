@@ -5,34 +5,84 @@
   flex-direction: column;
 }
 
-.authenticationHeaders {
+.authenticationHeaderBox {
   display: flex;
   flex-direction: row;
 }
-
-.authenticationBox h1 {
+.authenticationHeaderBox h1 {
   width: 50%;
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   text-align: center;
-  border-color: grey;
-  border-top-style: solid;
-  border-right-style: solid;
-  border-left-style: solid;
-  border-width: 1px;
   margin: 0;
   padding: 0.5rem 0;
+
+  border-radius: 10px 10px 0px 0px;
+  border-color: grey;
+  border-style: solid solid none solid;
+  border-width: 1px;
+
+  background-color: #f3f3f5;
+  color: #a6a4b9;
 }
 
-.logInContent {
-  height: 10rem;
+.logInContentBox {
+  height: 20rem;
   width: 100%;
+  padding: 1rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+
   border-color: grey;
-  border-bottom-style: solid;
-  border-right-style: solid;
-  border-left-style: solid;
+  border-style: none solid solid solid;
+  border-width: 1px;
+  border-radius: 0px 0px 8px 8px;
+
+  background-color: #f3f3f5;
+}
+.logInContentBox form {
+  width: 90%;
+  height: 11rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  flex-direction: column;
+}
+.logInContentBox input {
+  height: 2.5rem;
+  width: 65%;
+  padding: 0.5rem;
+
+  border-radius: 5px;
   border-width: 1px;
 }
+.logInContentBox button {
+  height: 2.5rem;
+  width: 25%;
+  padding: 0.5rem;
 
-.authenticationBox p {
-  margin: 0;
+  border-radius: 5px;
+  border-width: 1px;
+
+  background-color: #51423f;
+  color: white;
+
+  font-size: 0.9rem;
+}
+
+.GoogleBox {
+  height: 2.5rem;
+  width: auto;
+  flex-direction: row;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.GoogleImgBox {
+  height: 2.5rem;
+  width: 5rem;
+  margin-left: 0.5rem;
+  position: relative;
+  align-self: flex-end;
 }
