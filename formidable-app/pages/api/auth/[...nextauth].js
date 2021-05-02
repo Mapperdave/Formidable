@@ -11,28 +11,29 @@ const options = {
       async authorize (credentials) {
         
         const { db } = await connectToDatabase();
-        var user = await db
+        return new Promise((resolve, reject) => {
+          db
           .collection('users')
-          .findOne({email: credentials.email})
-
-        if (user) {
-          bcrypt.compare(credentials.password, user.password, (err, result) => {
-            if (err) {
-              console.log('Error when comparing passwords');
-            } 
-            if (result) {
-              // return user;
+          .findOne({email: credentials.email}, (err, user) => {
+            if (user) {
+              bcrypt.compare(credentials.password, user.password, (err, result) => {
+                if (err) {
+                  console.log('Error when comparing passwords');
+                } 
+                if (!result) {
+                  console.log('Wrong password');
+                  return resolve(null);
+                } else {
+                  return resolve(user);
+                }
+              })
             } else {
-              console.log('Wrong password');
-              // return Response.json({success: false, message: 'Wrong password'});
+              console.log('User not found');
+              return resolve(null)
             }
-            
           })
-        } else {
-          console.log('User not found');
-          // return Response.json({success: false, message: 'Wrong email'});
-        }
-        return user;
+        
+        })
       },
       credentials: {
         email: { label: "Email", type: "email", placeholder: "john@example.com" },
@@ -97,8 +98,12 @@ const options = {
   // when an action is performed.
   // https://next-auth.js.org/configuration/callbacks
   callbacks: {
-    // async signIn(user, account, profile) { return true },
-    // async redirect(url, baseUrl) { return baseUrl },
+  //   async signIn(user, account, profile) { 
+      
+  //     console.log('tja')
+  //     return true
+  //   },
+    async redirect(url, baseUrl) { return baseUrl },
     // async session(session, user) { return session },
     // async jwt(token, user, account, profile, isNewUser) { return token }
   },
