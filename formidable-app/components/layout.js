@@ -8,7 +8,9 @@ import { signIn, signOut, useSession } from 'next-auth/client';
 const name = 'FORMidable'
 export const siteTitle = 'FORMidable'
 
-export default function Layout({ children, home, activeSession }) {
+export default function Layout({ children, home }) {
+  const [session, loading] = useSession();
+
   return (
     <div className={styles.container}>
       <Head>
@@ -25,7 +27,7 @@ export default function Layout({ children, home, activeSession }) {
           ) : (
             <div/>
           )}
-          {!activeSession ? (
+          {!session ? (
             <div className={styles.signInButtonDiv}>
               <button className={styles.signInButton} onClick={signIn}>Sign in</button>
               <p>/</p>

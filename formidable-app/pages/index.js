@@ -98,10 +98,9 @@ function onSignIn(googleUser) {
 // </script>
 
 export default function Home({ allPostsData }) {
-  const [session, loading] = useSession();
-
+  
   return (
-    <Layout home activeSession={session}>
+    <Layout home>
       <Head>
         <title>{siteTitle}</title>
         {/* <script src="https://apis.google.com/js/platform.js" async defer></script> */}
@@ -114,3 +113,4 @@ export default function Home({ allPostsData }) {
     </Layout>
   )
 }
+

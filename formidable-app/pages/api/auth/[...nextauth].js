@@ -11,7 +11,7 @@ const options = {
       async authorize (credentials) {
         
         const { db } = await connectToDatabase();
-        const user = await db
+        var user = await db
           .collection('users')
           .findOne({email: credentials.email})
 
@@ -19,16 +19,18 @@ const options = {
           bcrypt.compare(credentials.password, user.password, (err, result) => {
             if (err) {
               console.log('Error when comparing passwords');
-              return null;
+            } 
+            if (result) {
+              // return user;
             } else {
-              if (!result) {
-                console.log('Wrong password');
-                user = null
-              }
+              console.log('Wrong password');
+              // return Response.json({success: false, message: 'Wrong password'});
             }
+            
           })
         } else {
-          console.log('User not found')
+          console.log('User not found');
+          // return Response.json({success: false, message: 'Wrong email'});
         }
         return user;
       },
@@ -37,6 +39,8 @@ const options = {
         password: {  label: "Password", type: "password" }
       },
     }),
+
+
     Providers.Google({
       clientId: process.env.GOOGLE_ID,
       clientSecret: process.env.GOOGLE_SECRET
@@ -82,7 +86,7 @@ const options = {
   // pages is not specified for that route.
   // https://next-auth.js.org/configuration/pages
   pages: {
-    // signIn: '/auth/signin',  // Displays signin buttons
+    signIn: '../../signin',  // Displays signin buttons
     // signOut: '/auth/signout', // Displays form with sign out button
     // error: '/auth/error', // Error code passed in query string as ?error=
     // verifyRequest: '/auth/verify-request', // Used for check email page
