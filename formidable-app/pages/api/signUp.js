@@ -2,35 +2,37 @@ import bcrypt from 'bcryptjs';
 import { connectToDatabase } from '../../util/mongodb'
 
 export default async (req,res) => {
+
   const { db } = await connectToDatabase();
-  
+
   // Might not need to make this check. Could possibly use a 'unique: true' instead.
   const user = await db
     .collection('users')
-    .findOne({email: req.email});
+    .findOne({email: req.body.email});
 
   if (user) {
     res.status(409).json( {error: 'Email already in use'} );
+    console.log('Email already in use')
   } else {
 
-    const saltRounds = 10;
-    const hash = await bcrypt.hash(req.password, saltRounds);
-    user = {
-      name: req.name,
-      email: req.email,
-      password: hash
+    
+    const timestamp = new Date();
+    const newUser = {
+      email: req.body.email,
+      password: req.body.password,
+      createAt: timestamp,
+      updatedAt: timestamp
     }
 
     db
       .collection('users')
-      .insertOne(req, (err, result) => {
+      .insertOne(newUser, (err, result) => {
         if(err) {
-          return console.log(err);
+          res.status(400).json( {error: 'Unexpected error'} );
+          console.log(err);
         }
-  
-        console.log(result);
       });
     }
 
-  res.status(200).json( { message: 'Registration successfull'} );
+    res.status(200).send();
 }

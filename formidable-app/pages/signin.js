@@ -3,26 +3,25 @@ import { signIn, getSession, getProviders, getCsrfToken } from 'next-auth/client
 import Layout, { siteTitle } from '../components/layout';
 import styles from '../styles/Home.module.css';
 
-// <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
-
-export default function SignIn({providers, csrfToken}){
+// TODO: Make email and password states so that they don't disappear when wrong info is given
+// TODO: Get the CSRF-token back and use it to validate the request
+export default function SignIn({providers}){
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    var email = document.getElementById("email").value;
-    var password = document.getElementById("password").value;
-    var result = signIn("domain-login", { email, password });
-    console.log(result)
+    const email = document.getElementById("email").value;
+    const password = document.getElementById("password").value;
+    signIn("domain-login", { email, password })
+    .catch(err => alert('Incorrect email or password'));  // TODO: Make this alert good lookin'
   };
 
   return (
     <Layout>
       <div className={styles.logInContentBox}>
         <form onSubmit={handleSubmit}>
-          <input name="csrfToken" type="hidden" defaultValue={csrfToken} />
-          <input id="email" name="email" type="email" placeholder="email" required />
-          <input id="password" name="password" type="password" placeholder="password" required />
+          <input id="email" name="email" type="email" placeholder="Email" required />
+          <input id="password" name="password" type="password" placeholder="Password" required />
           <button type="submit">Sign In</button>
         </form>
         <div className="g-signin2" data-onsuccess="onSignIn"></div>
@@ -45,10 +44,19 @@ export default function SignIn({providers, csrfToken}){
 
 export async function getServerSideProps(context){
 
+  const session = await getSession(context);
+  
+  if (session) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false
+      }
+    };
+  }
   return {
     props: { 
-      providers: await getProviders(context), 
-      csrfToken: await getCsrfToken(context),
+      providers: await getProviders(context),
     }
   }
 }

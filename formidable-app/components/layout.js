@@ -9,6 +9,7 @@ const name = 'FORMidable'
 export const siteTitle = 'FORMidable'
 
 export default function Layout({ children, home }) {
+  
   const [session, loading] = useSession();
 
   return (
@@ -31,7 +32,9 @@ export default function Layout({ children, home }) {
             <div className={styles.signInButtonDiv}>
               <button className={styles.signInButton} onClick={signIn}>Sign in</button>
               <p>/</p>
-              <button className={styles.signUpButton}>Sign up</button>
+              <Link href='/signup'>
+                <button className={styles.signUpButton}>Sign up</button>
+              </Link>
             </div>
           ) : (
             <button className={styles.signInButton} onClick={signOut}>Sign out</button>

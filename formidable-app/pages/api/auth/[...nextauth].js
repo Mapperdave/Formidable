@@ -19,17 +19,18 @@ const options = {
               bcrypt.compare(credentials.password, user.password, (err, result) => {
                 if (err) {
                   console.log('Error when comparing passwords');
+                  reject(null);
                 } 
                 if (!result) {
                   console.log('Wrong password');
-                  return resolve(null);
+                  reject(null);
                 } else {
-                  return resolve(user);
+                  resolve(user);
                 }
               })
             } else {
               console.log('User not found');
-              return resolve(null)
+              reject(null);
             }
           })
         
@@ -98,11 +99,12 @@ const options = {
   // when an action is performed.
   // https://next-auth.js.org/configuration/callbacks
   callbacks: {
-  //   async signIn(user, account, profile) { 
-      
-  //     console.log('tja')
-  //     return true
-  //   },
+    // async signIn(user, account, profile) { 
+    //   console.log(user);
+    //   console.log(account);
+    //   console.log(profile);
+    //   return true
+    // },
     async redirect(url, baseUrl) { return baseUrl },
     // async session(session, user) { return session },
     // async jwt(token, user, account, profile, isNewUser) { return token }
