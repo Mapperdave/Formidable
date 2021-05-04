@@ -1,7 +1,8 @@
 import React from 'react';
+import Head from 'next/head'
 import { signIn, getSession, getProviders, getCsrfToken } from 'next-auth/client';
 import Layout, { siteTitle } from '../components/layout';
-import styles from '../styles/Home.module.css';
+import styles from '../styles/login.module.css';
 
 // TODO: Make email and password states so that they don't disappear when wrong info is given
 // TODO: Get the CSRF-token back and use it to validate the request
@@ -18,26 +19,30 @@ export default function SignIn({providers}){
 
   return (
     <Layout>
+      <Head>
+        <title>Log In</title>
+      </Head>
       <div className={styles.logInContentBox}>
+        <h2>Already have an account?</h2>
         <form onSubmit={handleSubmit}>
           <input id="email" name="email" type="email" placeholder="Email" required />
           <input id="password" name="password" type="password" placeholder="Password" required />
-          <button type="submit">Sign In</button>
+          <button type="submit">Log In</button>
         </form>
-        <div className="g-signin2" data-onsuccess="onSignIn"></div>
-      </div>
-      <>
         {Object.values(providers).map(provider => {
           if(provider.name === "Email") {
             return;
           }
           return(
             <div key={provider.name}>
-              <button variant="outline" onClick={() => signIn(provider.id)}>Sign in with {provider.name}</button>
+              <button className={styles.providerButton} onClick={() => signIn(provider.id)}>
+                Log in with {provider.name}
+              </button>
             </div>
           );
         })}
-      </>
+      </div>
+
     </Layout>
   )
 }

@@ -1,37 +1,62 @@
+import React from "react";
 import { getSession, signIn } from 'next-auth/client';
+import Head from 'next/head'
 import Layout from '../components/layout';
 import axios from 'axios';
 import bcrypt from 'bcryptjs';
-
+import styles from '../styles/login.module.css';
 
 export default function SingUp() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    const email = document.getElementById("email").value;
-    const password = document.getElementById("password").value;
 
-    const saltRounds = 10;
-    const hash = await bcrypt.hash(password, saltRounds);
+    console.log(e.target)
+    if(e.target.password.value != e.target.pswrepeat.value) {
+      //e.target.pswrepeat.setCustomValidity("Passwords must match.")
+    }
+    else {
+      const email = document.getElementById("email").value;
+      const password = document.getElementById("password").value;
 
-    await axios.post('./api/signup', {
-      email: email,
-      password: hash
-    })
-    .then(() => {signIn("domain-login", { email, password });})
-    .catch(err => { 
-      // TODO: Make this error respone look good
-      alert(err.response.data.error);
-    });
+      const saltRounds = 10;
+      const hash = await bcrypt.hash(password, saltRounds);
+
+      await axios.post('./api/signup', {
+        email: email,
+        password: hash
+      })
+      .then(() => {signIn("domain-login", { email, password });})
+      .catch(err => { 
+        // TODO: Make this error respone look good
+        e.target.email.setCustomValidity(err.response.data.error)
+        //alert(err.response.data.error);
+      });
+    } 
   };
+
+  /*const email = document.getElementById("mail");
+
+  email.addEventListener("input", function (event) {
+    if (email.validity.typeMismatch) {
+      email.setCustomValidity("I am expecting an e-mail address!");
+    } else {
+      email.setCustomValidity("");
+    }
+  });*/
 
   return(
     <Layout>
-      <div>
-        <form onSubmit={handleSubmit}>
+      <Head>
+        <title>Sign Up</title>
+      </Head>
+      <div className={styles.logInContentBox}>
+        <h2>Create an account down below!</h2>
+        <form className={styles.signUpForm} onSubmit={handleSubmit}>
           <input id="email" name="email" type="email" placeholder="Email" required />
-          <input id="password" name="password" type="password" placeholder="Password" required />
+          <input id="password" name="password" type="password" placeholder="Password" minLength="3" required />
+          <input id="pswrepeat" name="pswrepeat" type="password" minLength="3" 
+            required />
           <button type="submit">Sign up</button>
         </form>
       </div>

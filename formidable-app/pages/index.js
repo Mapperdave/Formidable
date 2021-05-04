@@ -12,14 +12,7 @@ import { getSortedPostsData } from '../lib/posts';
 import { signIn, signOut, useSession } from 'next-auth/client';
 
 
-export async function getStaticProps() {
-  const allPostsData = getSortedPostsData()
-  return {
-    props: {
-      allPostsData
-    }
-  }
-}
+
 // Dynamic routing example
 //       <section className={`${utilStyles.headingMd} ${utilStyles.padding1px}`}>
 //         <h2 className={utilStyles.headingLg}>Blog</h2>
@@ -56,3 +49,11 @@ export default function Home({ allPostsData }) {
   )
 }
 
+export async function getStaticProps() {
+  const allPostsData = getSortedPostsData()
+  return {
+    props: {
+      allPostsData
+    }
+  }
+}

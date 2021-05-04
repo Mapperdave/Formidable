@@ -19,26 +19,36 @@ export default function Layout({ children, home }) {
       </Head>
       <header>
         <div className={styles.globalHeader}>
-          {!home ? (
-            <Link href="/">
-              <a>
-                <h2 className={utilStyles.headingLg}>{name}</h2>
-              </a>
-            </Link>
-          ) : (
-            <div/>
-          )}
-          {!session ? (
-            <div className={styles.signInButtonDiv}>
-              <button className={styles.signInButton} onClick={signIn}>Sign in</button>
-              <p>/</p>
-              <Link href='/signup'>
-                <button className={styles.signUpButton}>Sign up</button>
+          <>
+            {!home && (
+              <Link href="/">
+                <a>
+                  <h2 className={utilStyles.headingLg}>{name}</h2>
+                </a>
               </Link>
+            )}
+            {(!home && session) ? (
+              <div>{session.user.email}</div>
+            ) : (
+              <div/>
+            )
+            }
+            <div className={styles.buttonDiv}>
+              {!session ? (
+                <>
+                  <button id="logInHeaderButton" onClick={signIn}>LOG IN</button>
+                  <Link href='/signup'>
+                    <button className={styles.signUpButton}>SIGN UP</button>
+                  </Link>
+                </>
+              ) : (
+                <>
+                  {/* <p classname={styles.emailDropdown}>{session.user.email} </p> */}
+                  <button onClick={signOut}>LOG OUT</button>
+                </>
+              )}
             </div>
-          ) : (
-            <button className={styles.signInButton} onClick={signOut}>Sign out</button>
-          )}
+          </>
         </div>
 
         {home && (
@@ -60,13 +70,13 @@ export default function Layout({ children, home }) {
         
       </header>
       <main>{children}</main>
-      {!home && (
+      {/*!home && (
         <div className={styles.backToHome}>
           <Link href="/">
             <a>← Back to home</a>
           </Link>
         </div>
-      )}
+      )*/}
     </div>
   )
 }

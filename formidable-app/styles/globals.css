@@ -5,18 +5,17 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen, Ubuntu,
     Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
   line-height: 1.6;
-  font-size: 18px;
+  font-size: 16px;
   height: 100%;
   position:relative;
+
+  color: #000505;
 }
 
 * {
   box-sizing: border-box;
 }
 
-header {
-  margin: 1rem;
-}
 header a {
   color: black;
 }
@@ -33,7 +32,7 @@ footer {
 }
 
 a {
-  color: #0070f3;
+  color: #197BBD;
   text-decoration: none;
 }
 a:hover {
