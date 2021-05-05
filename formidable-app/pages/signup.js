@@ -35,16 +35,6 @@ export default function SingUp() {
     } 
   };
 
-  /*const email = document.getElementById("mail");
-
-  email.addEventListener("input", function (event) {
-    if (email.validity.typeMismatch) {
-      email.setCustomValidity("I am expecting an e-mail address!");
-    } else {
-      email.setCustomValidity("");
-    }
-  });*/
-
   return(
     <Layout>
       <Head>
@@ -55,8 +45,7 @@ export default function SingUp() {
         <form className={styles.signUpForm} onSubmit={handleSubmit}>
           <input id="email" name="email" type="email" placeholder="Email" required />
           <input id="password" name="password" type="password" placeholder="Password" minLength="3" required />
-          <input id="pswrepeat" name="pswrepeat" type="password" minLength="3" 
-            required />
+          <input id="pswrepeat" name="pswrepeat" type="password" minLength="3" required />
           <button type="submit">Sign up</button>
         </form>
       </div>

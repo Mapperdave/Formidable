@@ -1,36 +1,66 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-export default function Dropdown({updateForm, form, id}) {
+export default function Dropdown({updateForm, form, id, renderEditableText}) {
+  
+  const [ question, setQeustion ] = useState('Question');
+  const [ editingQuestion, setEditingQuestion ] = useState(false);
+
+  const renderOptions = form[id].options.map((option, i) => {
+    return(
+      <div key={i}>
+        <p>{i+1}. {option}</p>
+      </div>
+    )
+  });
 
   const addQuestion = (e) => {
     e.preventDefault();
-    updateForm(form => [...form, {component: 'default'}]);
+
+    let newForm = [...form];
+    newForm.splice(id+1, 0, {component: 'multChoice', question: 'Question', options: ['Option 1']})
+    updateForm(newForm);
+  };
+
+  const addOption = (e) => {
+    e.preventDefault();
+
+    const nOptions = form[id].options.length;
+    let newForm = [...form];
+    newForm[id].options.push(`Option ${nOptions+1}`)
+    updateForm(newForm);
   };
 
   const handleChange = (e) => {
-
-    console.log('In dropdown!');
     
     let newForm = [...form];
-    newForm[id].component = e.target.id;
-    console.log(newForm);
+    newForm[id].component = e.target.value;
+    if (e.target.value === 'text') {
+      newForm[id].options = [null];
+    }
     updateForm(newForm);
-
   };
 
   return(
     <div>
-      <form>
-        <input id="text" name="test" value="text" type="radio" onChange={handleChange}/>
-        <label>Text</label><br></br>
-        <input id="multChoice" name="test" value="multChoice" type="radio" onChange={handleChange}/>
-        <label>Multiple Choice</label><br></br>
-        <input id="checkboxes" name="test" value="checkboxes" type="radio" onChange={handleChange}/>
-        <label>Checkboxes</label><br></br>
-        <input id="dropdown" name="test" value="dropdown" type="radio" checked onChange={handleChange}/>
-        <label>Dropdown</label><br></br>
-        <button onClick={addQuestion}>Add question</button>
-      </form>
+      <div>
+        {renderEditableText(question, editingQuestion, setQeustion, setEditingQuestion)}
+      </div>
+      <div>
+        {renderOptions}
+        <button onClick={addOption}>Add option</button>
+      </div>
+      <div>
+        <form>
+          <select name='formType' id='formType' defaultValue={'dropdown'} onChange={handleChange}>
+            <option value='multChoice'>Multiple choice</option>
+            <option value='checkboxes'>Checkboxes</option>
+            <option value='dropdown'>Drop-down</option>
+            <option value='text'>Text</option>
+          </select>
+          <br></br>
+          <button onClick={addQuestion}>Add question</button>
+        </form>
+      </div>
     </div>
   )
 }
