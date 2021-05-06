@@ -1,18 +1,19 @@
 import React, { useState, useEffect } from 'react';
 
-export default function MultChoice({id, form, updateForm, renderEditableText}) {
+export default function MultChoice({id, form, setForm, renderEditableText}) {
 
   const [ question, setQeustion ] = useState('Question');
   const [ editingQuestion, setEditingQuestion ] = useState(false);
 
-  //TODO: Make it so that Question is saved in the form and stays when component is changed
-  //TODO: Make Options editable
+  const [ options , setOptions ] = useState([ 'Option 1' ]);
+  const [ editingOptions, setEditingOptions ] = useState(false);
 
-  const renderOptions = form.components[id].options.map((option, i) => {
+  //TODO: Make Options editable
+  const renderOptions = options.map((option, i) => {
     return(
       <div key={i}>
-        <input type='radio' name={id} id={i} disabled/>{option}
-        {/* {renderEditableText(optionState, editingOptions, setOptionState, setEditingOptions)} */}
+        <input type='radio' name={id} id={i} disabled/>
+        {renderEditableText(options[i], editingOptions, setOptions, setEditingOptions, 'options', id)}
       </div>
     )
   });
@@ -21,42 +22,45 @@ export default function MultChoice({id, form, updateForm, renderEditableText}) {
     e.preventDefault();
 
     let newForm = Object.assign({}, form); // Treats state as immutable
-    newForm.components.splice(id+1, 0, {type: 'multChoice', question: 'Question', options: ['Option 1']});
-    updateForm(newForm);
+    newForm.components.splice(id+1, 0, 'multChoice');
+    newForm.questions.splice(id+1, 0, 'Question');
+    newForm.options.splice(id+1, 0, ['Option 1']);
+    setForm(newForm);
   }
 
   const addOption = (e) => {
     e.preventDefault();
 
-    const nOptions = form.components[id].options.length;
+    const nOptions = options.length;
+    let newOptions = Object.assign([], options);
+    newOptions.push(`Option ${nOptions+1}`);
+    setOptions(newOptions);
+
     let newForm = Object.assign({}, form);
-    newForm.components[id].options.push(`Option ${nOptions+1}`)
-    updateForm(newForm);
+    newForm.options[id] = options;
+    setForm(newForm);
   }
 
   const handleChange = (e) => {
     let newForm = Object.assign({}, form);
-    newForm.components[id].type = e.target.value;
+    newForm.components[id] = e.target.value;
     if (e.target.value === 'text') {
-      newForm.components[id].options = [];
+      setOptions([]);
+      newForm.options[id] = [];
     }
-    updateForm(newForm);
+    setForm(newForm);
   }
 
   const testFunction = (e) => {
     e.preventDefault();
-    let newForm = Object.assign({}, form);
-    newForm.description = "Funkar!";
-    console.log(newForm);
-    console.log(form);
-    updateForm(newForm); 
+    
     console.log(form);
   }
 
   return(
     <div>
       <div>
-        {renderEditableText(question, editingQuestion, setQeustion, setEditingQuestion)}
+        {renderEditableText(question, editingQuestion, setQeustion, setEditingQuestion, 'questions', id)}
       </div>
       <div>
         <form>

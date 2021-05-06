@@ -21,25 +21,37 @@ export default function Create() {
   const [ description, setDescription ] = useState('Form description');
   const [ editingDescription, setEditingDescription ] = useState(false);
 
-  const [ form, updateForm ] = useState({
+  const [ form, setForm ] = useState({
     name: name,
     description: description,
-    components: [{
-      type: 'multChoice',
-      question: 'Question',
-      options: ['Option 1']
-    }]
+    components: [ 'multChoice' ],
+    questions: [ 'Question' ],
+    options: [['Option 1']]
+    
   });
 
   // Updates title when name is changed
   useEffect(() => {
-    document.title = `${form.name} - FORMidable`;
+    document.title = `${name} - FORMidable`;
   },[name]);
 
-  const renderEditableText = (text, editing, setText, setEdit) => {
+  // THIS FUNCTION NEEDS FIXING
+  const handleChange = (value, setValue, key, id) => {
+    let newForm = Object.assign({}, form);
+    if(typeof id === 'undefined') {
+      setValue(value);
+      newForm[key] = value;
+    } else {
+      setValue()
+      newForm[key][id] = value;
+    }
+    setForm(newForm);
+  }
+
+  const renderEditableText = (value, editing, setValue, setEdit, key, id) => {
     if (editing) {
       return (
-        <input type='text' id='name' value={text} autoFocus onChange={(e) => setText(e.target.value)}  onBlur={() => setEdit(false)}/>
+        <input type='text' id='name' value={value} autoFocus onChange={(e) => {handleChange(e.target.value, setValue, key, id)}}  onBlur={() => setEdit(false)}/>
       )
     }
     return(
@@ -47,24 +59,14 @@ export default function Create() {
     )
   };
 
-  const renderEditableText2 = (form, editing, setEdit, ...paths) => {
-    if (editing) {
-      return (
-        <input type='text' id='name' value={''} autoFocus onChange={(e) => setText(e.target.value)}  onBlur={() => setEdit(false)}/>
-      )
-    }
-    return(
-      <p onClick={() => setEdit(true)}>{''}</p>
-    )
-  };
 
   const renderForm = form.components.map((component, i) => {
     return(
-      React.createElement(Components[component.type], {
+      React.createElement(Components[component], {
         key: i,
         id: i,
         form: form,
-        updateForm: updateForm,
+        setForm: setForm,
         renderEditableText: renderEditableText,
       })
     )
@@ -74,11 +76,10 @@ export default function Create() {
       <div>
         <div>
           <div>
-            {/* {renderEditableText(name, editingName, setName, setEditingName)} */}
-            {renderEditableText2(form, editingName, setEditingName, 'name')}
+            {renderEditableText(name, editingName, setName, setEditingName, 'name')}
           </div>
           <div>
-            {renderEditableText(description, editingDescription, setDescription, setEditingDescription)}
+            {renderEditableText(description, editingDescription, setDescription, setEditingDescription, 'description')}
           </div>
         </div>
         <div>
