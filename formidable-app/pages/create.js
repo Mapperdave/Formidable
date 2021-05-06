@@ -7,10 +7,10 @@ import Text from '../components/form/text'
 
 // Maps string inputs inside the form JSON-objects to different from components
 const Components = {
-  text: Text,
+  multChoice: MultChoice,
   checkboxes: Checkboxes,
   dropdown: Dropdown,
-  multChoice: MultChoice
+  text: Text,
 }
 
 export default function Create() {
@@ -21,11 +21,19 @@ export default function Create() {
   const [ description, setDescription ] = useState('Form description');
   const [ editingDescription, setEditingDescription ] = useState(false);
 
-  const [ form, updateForm ] = useState([{component: 'multChoice', question: 'Question', options: ['Option 1']}]);
+  const [ form, updateForm ] = useState({
+    name: name,
+    description: description,
+    components: [{
+      type: 'multChoice',
+      question: 'Question',
+      options: ['Option 1']
+    }]
+  });
 
   // Updates title when name is changed
   useEffect(() => {
-    document.title = `${name} - FORMidable`;
+    document.title = `${form.name} - FORMidable`;
   },[name]);
 
   const renderEditableText = (text, editing, setText, setEdit) => {
@@ -39,13 +47,24 @@ export default function Create() {
     )
   };
 
-  const renderForm = form.map((item, i) => {
+  const renderEditableText2 = (form, editing, setEdit, ...paths) => {
+    if (editing) {
+      return (
+        <input type='text' id='name' value={''} autoFocus onChange={(e) => setText(e.target.value)}  onBlur={() => setEdit(false)}/>
+      )
+    }
     return(
-      React.createElement(Components[item.component], {
+      <p onClick={() => setEdit(true)}>{''}</p>
+    )
+  };
+
+  const renderForm = form.components.map((component, i) => {
+    return(
+      React.createElement(Components[component.type], {
         key: i,
-        updateForm: updateForm,
-        form: form,
         id: i,
+        form: form,
+        updateForm: updateForm,
         renderEditableText: renderEditableText,
       })
     )
@@ -55,7 +74,8 @@ export default function Create() {
       <div>
         <div>
           <div>
-            {renderEditableText(name, editingName, setName, setEditingName)}
+            {/* {renderEditableText(name, editingName, setName, setEditingName)} */}
+            {renderEditableText2(form, editingName, setEditingName, 'name')}
           </div>
           <div>
             {renderEditableText(description, editingDescription, setDescription, setEditingDescription)}
