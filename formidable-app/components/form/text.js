@@ -1,37 +1,38 @@
 import React, { useState } from 'react';
 
-export default function Text({updateForm, form, id, renderEditableText}) {
+export default function MultChoice({id, form, setForm, renderEditableText}) {
 
-  const [ question, setQeustion ] = useState('Question');
+  const [ question, setQeustion ] = useState(form.questions[id]);
   const [ editingQuestion, setEditingQuestion ] = useState(false);
 
   const addQuestion = (e) => {
     e.preventDefault();
-
-    let newForm = [...form];
-    newForm.splice(id+1, 0, {component: 'multChoice', question: 'Question', options: ['Option 1']})
-    updateForm(newForm);
-  };
+    
+    let newForm = Object.assign({}, form); // Treats state as immutable
+    newForm.components.splice(id+1, 0, 'multChoice');
+    newForm.questions.splice(id+1, 0, 'Question');
+    newForm.options.splice(id+1, 0, ['Option 1']);
+    setForm(newForm);
+  }
 
   const handleChange = (e) => {
-    
-    let newForm = [...form];
-    newForm[id].component = e.target.value;
-    newForm[id].options = ['Option 1'];
-    updateForm(newForm);
-  };
+    let newForm = Object.assign({}, form);
+    newForm.components[id] = e.target.value;
+    newForm.options[id] = ['Option 1'];
+    setForm(newForm);
+  }
 
   return(
     <div>
       <div>
-        {renderEditableText(question, editingQuestion, setQeustion, setEditingQuestion)}
+        {renderEditableText(question, editingQuestion, setQeustion, setEditingQuestion, 'questions', id)}
       </div>
       <div>
         <p>Text answer</p>
       </div>
       <div>
         <form>
-          <select name='formType' id='formType' defaultValue={'text'} onChange={handleChange}>
+          <select name='setComponent' defaultValue={'text'} onChange={handleChange}>
             <option value='multChoice'>Multiple choice</option>
             <option value='checkboxes'>Checkboxes</option>
             <option value='dropdown'>Drop-down</option>

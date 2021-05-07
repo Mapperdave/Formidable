@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
-import Checkboxes from '../components/form/checkboxes'
-import Dropdown from '../components/form/dropdown'
-import MultChoice from '../components/form/multiple_choice'
-import Text from '../components/form/text'
+import Checkboxes from '../components/form/checkboxes';
+import Dropdown from '../components/form/dropdown';
+import MultChoice from '../components/form/multiple_choice';
+import Text from '../components/form/text';
+import Layout from '../components/layout';
 
 
 // Maps string inputs inside the form JSON-objects to different from components
@@ -27,7 +28,6 @@ export default function Create() {
     components: [ 'multChoice' ],
     questions: [ 'Question' ],
     options: [['Option 1']]
-    
   });
 
   // Updates title when name is changed
@@ -35,30 +35,79 @@ export default function Create() {
     document.title = `${name} - FORMidable`;
   },[name]);
 
-  // THIS FUNCTION NEEDS FIXING
-  const handleChange = (value, setValue, key, id) => {
+  const handleChange = (event, value, setValue, id, optInd) => {
     let newForm = Object.assign({}, form);
-    if(typeof id === 'undefined') {
-      setValue(value);
-      newForm[key] = value;
+
+    // name & description: key returns an item
+    if (typeof id === 'undefined') {
+      setValue(event.target.value);
+      newForm[event.target.name] = event.target.value;
     } else {
-      setValue()
-      newForm[key][id] = value;
+      // questions: key returns array
+      if (typeof optInd === 'undefined') {
+        setValue(event.target.value);
+        newForm[event.target.name][id] = event.target.value;
+        // options: key returns multi array
+      } else {
+        value[optInd] = event.target.value;
+        setValue(value);
+        newForm[event.target.name][id] = value;
+      }
     }
     setForm(newForm);
   }
 
-  const renderEditableText = (value, editing, setValue, setEdit, key, id) => {
-    if (editing) {
-      return (
-        <input type='text' id='name' value={value} autoFocus onChange={(e) => {handleChange(e.target.value, setValue, key, id)}}  onBlur={() => setEdit(false)}/>
-      )
+  const handleValue = (value, i) => {
+    // Needed if value is an array, like for options
+    if (typeof i === 'undefined') {
+      return value;
+    } 
+    return value[i];
+  }
+
+  const setOptionsEdit = (editing, setEdit, i, bool, event) => {
+    event.preventDefault();
+    
+    let newEditing = [...editing];
+    newEditing[i] = bool;
+    setEdit(newEditing);
+  }
+
+  const renderEditableText = (value, editing, setValue, setEdit, key, id, optInd) => {
+    // options: Checks if editing is array 
+    if (typeof editing === 'object') {
+      if (editing[optInd]) {
+        return (
+          <input type='text' 
+            name={key}
+            value={handleValue(value, optInd)}
+            autoFocus
+            onFocus={(e) => e.target.select()}
+            onChange={(e) => {handleChange(e, value, setValue, id, optInd)}}
+            onBlur={(e) => setOptionsEdit(editing, setEdit, optInd, false, e)}/>
+        );
+      } else {
+        return(
+          <p onClick={(e) => setOptionsEdit(editing, setEdit, optInd, true, e)}>{handleValue(value, optInd)}</p>
+        )
+      }
+    } else {
+      if (editing) {
+        return (
+          <input type='text' 
+            name={key}
+            value={handleValue(value, optInd)}
+            autoFocus
+            onFocus={(e) => e.target.select()}
+            onChange={(e) => {handleChange(e, value, setValue, id, optInd)}}
+            onBlur={() => setEdit(false)}/>
+        );
+      }
     }
     return(
-      <p onClick={() => setEdit(true)}>{text}</p>
+      <p onClick={() => setEdit(true)}>{handleValue(value, optInd)}</p>
     )
   };
-
 
   const renderForm = form.components.map((component, i) => {
     return(
@@ -72,7 +121,13 @@ export default function Create() {
     )
   });
 
+  const testFunction = (e) => {
+    e.preventDefault();
+    console.log(form);
+  }
+
   return(
+    <Layout>
       <div>
         <div>
           <div>
@@ -85,6 +140,8 @@ export default function Create() {
         <div>
           {renderForm}
         </div>
+        <button onClick={testFunction}>Log form state</button>
       </div>
+    </Layout>
   );
 }

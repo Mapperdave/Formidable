@@ -1,26 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
 export default function MultChoice({id, form, setForm, renderEditableText}) {
 
-  const [ question, setQeustion ] = useState('Question');
+  const [ question, setQeustion ] = useState(form.questions[id]);
   const [ editingQuestion, setEditingQuestion ] = useState(false);
 
-  const [ options , setOptions ] = useState([ 'Option 1' ]);
-  const [ editingOptions, setEditingOptions ] = useState(false);
+  const [ options , setOptions ] = useState([...form.options[id]]);
+  const [ editingOptions, setEditingOptions ] = useState([ false ]);
 
-  //TODO: Make Options editable
-  const renderOptions = options.map((option, i) => {
+  const renderOptions = options.map((_, i) => {
     return(
-      <div key={i}>
-        <input type='radio' name={id} id={i} disabled/>
-        {renderEditableText(options[i], editingOptions, setOptions, setEditingOptions, 'options', id)}
+      <div key={`option_${id}_${i}`}>
+        <input type='radio' disabled/>
+        {renderEditableText(options, editingOptions, setOptions, setEditingOptions, 'options', id, i)}
       </div>
     )
   });
 
   const addQuestion = (e) => {
     e.preventDefault();
-
+    
     let newForm = Object.assign({}, form); // Treats state as immutable
     newForm.components.splice(id+1, 0, 'multChoice');
     newForm.questions.splice(id+1, 0, 'Question');
@@ -30,14 +29,18 @@ export default function MultChoice({id, form, setForm, renderEditableText}) {
 
   const addOption = (e) => {
     e.preventDefault();
-
     const nOptions = options.length;
+
     let newOptions = Object.assign([], options);
     newOptions.push(`Option ${nOptions+1}`);
     setOptions(newOptions);
 
+    let newEditingOptions = Object.assign([], editingOptions);
+    newEditingOptions.push(false);
+    setEditingOptions(newEditingOptions);
+
     let newForm = Object.assign({}, form);
-    newForm.options[id] = options;
+    newForm.options[id] = newOptions;
     setForm(newForm);
   }
 
@@ -49,12 +52,6 @@ export default function MultChoice({id, form, setForm, renderEditableText}) {
       newForm.options[id] = [];
     }
     setForm(newForm);
-  }
-
-  const testFunction = (e) => {
-    e.preventDefault();
-    
-    console.log(form);
   }
 
   return(
@@ -70,7 +67,7 @@ export default function MultChoice({id, form, setForm, renderEditableText}) {
       </div>
       <div>
         <form>
-          <select name='formType' id='formType' defaultValue={'multChoice'} onChange={handleChange}>
+          <select name='setComponent' defaultValue={'multChoice'} onChange={handleChange}>
             <option value='multChoice'>Multiple choice</option>
             <option value='checkboxes'>Checkboxes</option>
             <option value='dropdown'>Drop-down</option>
@@ -78,7 +75,6 @@ export default function MultChoice({id, form, setForm, renderEditableText}) {
           </select>
           <br></br>
           <button onClick={addQuestion}>Add question</button>
-          <button onClick={testFunction}>Test</button>
         </form>
       </div>
     </div>

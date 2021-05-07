@@ -1,49 +1,63 @@
 import React, { useState } from 'react';
 
-export default function Checkboxes({updateForm, form, id, renderEditableText}) {
+export default function MultChoice({id, form, setForm, renderEditableText}) {
 
-  const [ question, setQeustion ] = useState('Question');
+  const [ question, setQeustion ] = useState(form.questions[id]);
   const [ editingQuestion, setEditingQuestion ] = useState(false);
 
-  const renderOptions = form[id].options.map((option, i) => {
+  const [ options , setOptions ] = useState([...form.options[id]]);
+  const [ editingOptions, setEditingOptions ] = useState([ false ]);
+
+  const renderOptions = options.map((_, i) => {
     return(
-      <div key={i}>
-        <input type='checkbox' name={id} id={i} disabled/>{option}
+      <div key={`option_${id}_${i}`}>
+        <input type='checkbox' disabled/>
+        {renderEditableText(options, editingOptions, setOptions, setEditingOptions, 'options', id, i)}
       </div>
     )
   });
 
   const addQuestion = (e) => {
     e.preventDefault();
-
-    let newForm = [...form];
-    newForm.splice(id+1, 0, {component: 'multChoice', question: 'Question', options: ['Option 1']})
-    updateForm(newForm);
-  };
+    
+    let newForm = Object.assign({}, form); // Treats state as immutable
+    newForm.components.splice(id+1, 0, 'multChoice');
+    newForm.questions.splice(id+1, 0, 'Question');
+    newForm.options.splice(id+1, 0, ['Option 1']);
+    setForm(newForm);
+  }
 
   const addOption = (e) => {
     e.preventDefault();
+    const nOptions = options.length;
 
-    const nOptions = form[id].options.length;
-    let newForm = [...form];
-    newForm[id].options.push(`Option ${nOptions+1}`)
-    updateForm(newForm);
-  };
+    let newOptions = Object.assign([], options);
+    newOptions.push(`Option ${nOptions+1}`);
+    setOptions(newOptions);
+
+    let newEditingOptions = Object.assign([], editingOptions);
+    newEditingOptions.push(false);
+    setEditingOptions(newEditingOptions);
+
+    let newForm = Object.assign({}, form);
+    newForm.options[id] = newOptions;
+    setForm(newForm);
+  }
 
   const handleChange = (e) => {
-    
-    let newForm = [...form];
-    newForm[id].component = e.target.value;
+    let newForm = Object.assign({}, form);
+    newForm.components[id] = e.target.value;
     if (e.target.value === 'text') {
-      newForm[id].options = [null];
+      setOptions([]);
+      newForm.options[id] = [];
     }
-    updateForm(newForm);
-  };
+    setForm(newForm);
+  }
 
   return(
     <div>
       <div>
-        {renderEditableText(question, editingQuestion, setQeustion, setEditingQuestion)}
+        {renderEditableText(question, editingQuestion, setQeustion, setEditingQuestion, 'questions', id)}
       </div>
       <div>
         <form>
@@ -53,7 +67,7 @@ export default function Checkboxes({updateForm, form, id, renderEditableText}) {
       </div>
       <div>
         <form>
-          <select name='formType' id='formType' defaultValue={'checkboxes'} onChange={handleChange}>
+          <select name='setComponent' defaultValue={'checkboxes'} onChange={handleChange}>
             <option value='multChoice'>Multiple choice</option>
             <option value='checkboxes'>Checkboxes</option>
             <option value='dropdown'>Drop-down</option>
