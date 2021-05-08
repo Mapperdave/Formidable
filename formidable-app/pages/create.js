@@ -5,7 +5,6 @@ import MultChoice from '../components/form/multiple_choice';
 import Text from '../components/form/text';
 import Layout from '../components/layout';
 
-
 // Maps string inputs inside the form JSON-objects to different from components
 const Components = {
   multChoice: MultChoice,
@@ -109,6 +108,7 @@ export default function Create() {
     )
   };
 
+  // TODO: Something inside the components array need to change for the component to update properly
   const renderForm = form.components.map((component, i) => {
     return(
       React.createElement(Components[component], {

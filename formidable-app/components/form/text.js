@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styles from './form.module.css'
 
 export default function MultChoice({id, form, setForm, renderEditableText}) {
 
@@ -24,13 +25,13 @@ export default function MultChoice({id, form, setForm, renderEditableText}) {
 
   return(
     <div>
-      <div>
-        {renderEditableText(question, editingQuestion, setQeustion, setEditingQuestion, 'questions', id)}
-      </div>
-      <div>
-        <p>Text answer</p>
-      </div>
-      <div>
+      <div className={styles.questionDiv}>
+        <div>
+          {renderEditableText(question, editingQuestion, setQeustion, setEditingQuestion, 'questions', id)}
+        </div>
+        <div>
+          <p className={styles.textAnswer}>Text answer</p>
+        </div>
         <form>
           <select name='setComponent' defaultValue={'text'} onChange={handleChange}>
             <option value='multChoice'>Multiple choice</option>
@@ -38,9 +39,10 @@ export default function MultChoice({id, form, setForm, renderEditableText}) {
             <option value='dropdown'>Drop-down</option>
             <option value='text'>Text</option>
           </select>
-          <br></br>
-          <button onClick={addQuestion}>Add question</button>
         </form>
+      </div>
+      <div>
+        <button onClick={addQuestion}>Add question</button>
       </div>
     </div>
   )

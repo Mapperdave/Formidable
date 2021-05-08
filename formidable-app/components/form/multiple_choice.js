@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
+import styles from './form.module.css'
 
 export default function MultChoice({id, form, setForm, renderEditableText}) {
 
-  const [ question, setQeustion ] = useState(form.questions[id]);
+  const [ question, setQuestion ] = useState(form.questions[id]);
   const [ editingQuestion, setEditingQuestion ] = useState(false);
 
   const [ options , setOptions ] = useState([...form.options[id]]);
@@ -10,7 +11,7 @@ export default function MultChoice({id, form, setForm, renderEditableText}) {
 
   const renderOptions = options.map((_, i) => {
     return(
-      <div key={`option_${id}_${i}`}>
+      <div key={`option_${id}_${i}`} className={styles.optionDiv}>
         <input type='radio' disabled/>
         {renderEditableText(options, editingOptions, setOptions, setEditingOptions, 'options', id, i)}
       </div>
@@ -24,6 +25,7 @@ export default function MultChoice({id, form, setForm, renderEditableText}) {
     newForm.components.splice(id+1, 0, 'multChoice');
     newForm.questions.splice(id+1, 0, 'Question');
     newForm.options.splice(id+1, 0, ['Option 1']);
+
     setForm(newForm);
   }
 
@@ -56,16 +58,16 @@ export default function MultChoice({id, form, setForm, renderEditableText}) {
 
   return(
     <div>
-      <div>
-        {renderEditableText(question, editingQuestion, setQeustion, setEditingQuestion, 'questions', id)}
-      </div>
-      <div>
-        <form>
-          {renderOptions}
-          <button onClick={addOption}>Add option</button>
-        </form>
-      </div>
-      <div>
+      <div className={styles.questionDiv}>
+        <div>
+          {renderEditableText(question, editingQuestion, setQuestion, setEditingQuestion, 'questions', id)}
+        </div>
+        <div>
+          <form>
+            {renderOptions}
+            <button onClick={addOption}>Add option</button>
+          </form>
+        </div>
         <form>
           <select name='setComponent' defaultValue={'multChoice'} onChange={handleChange}>
             <option value='multChoice'>Multiple choice</option>
@@ -73,9 +75,10 @@ export default function MultChoice({id, form, setForm, renderEditableText}) {
             <option value='dropdown'>Drop-down</option>
             <option value='text'>Text</option>
           </select>
-          <br></br>
-          <button onClick={addQuestion}>Add question</button>
         </form>
+      </div>
+      <div>
+        <button onClick={addQuestion}>Add question</button>
       </div>
     </div>
   )

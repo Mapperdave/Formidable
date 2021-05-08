@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import styles from './form.module.css'
 
 export default function MultChoice({id, form, setForm, renderEditableText}) {
 
@@ -10,7 +11,7 @@ export default function MultChoice({id, form, setForm, renderEditableText}) {
 
   const renderOptions = options.map((_, i) => {
     return(
-      <div key={`option_${id}_${i}`}>
+      <div key={`option_${id}_${i}`} className={styles.optionDiv}>
         <input type='checkbox' disabled/>
         {renderEditableText(options, editingOptions, setOptions, setEditingOptions, 'options', id, i)}
       </div>
@@ -56,16 +57,16 @@ export default function MultChoice({id, form, setForm, renderEditableText}) {
 
   return(
     <div>
-      <div>
-        {renderEditableText(question, editingQuestion, setQeustion, setEditingQuestion, 'questions', id)}
-      </div>
-      <div>
-        <form>
-          {renderOptions}
-          <button onClick={addOption}>Add option</button>
-        </form>
-      </div>
-      <div>
+      <div className={styles.questionDiv}>
+        <div>
+          {renderEditableText(question, editingQuestion, setQeustion, setEditingQuestion, 'questions', id)}
+        </div>
+        <div>
+          <form>
+            {renderOptions}
+            <button onClick={addOption}>Add option</button>
+          </form>
+        </div>
         <form>
           <select name='setComponent' defaultValue={'checkboxes'} onChange={handleChange}>
             <option value='multChoice'>Multiple choice</option>
@@ -73,9 +74,10 @@ export default function MultChoice({id, form, setForm, renderEditableText}) {
             <option value='dropdown'>Drop-down</option>
             <option value='text'>Text</option>
           </select>
-          <br></br>
-          <button onClick={addQuestion}>Add question</button>
         </form>
+      </div>
+      <div>
+        <button onClick={addQuestion}>Add question</button>
       </div>
     </div>
   )

@@ -11,11 +11,11 @@ export default function SingUp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    console.log(e.target)
+    /*console.log(e.target)
     if(e.target.password.value != e.target.pswrepeat.value) {
       //e.target.pswrepeat.setCustomValidity("Passwords must match.")
     }
-    else {
+    else {*/
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
 
@@ -29,10 +29,10 @@ export default function SingUp() {
       .then(() => {signIn("domain-login", { email, password });})
       .catch(err => { 
         // TODO: Make this error respone look good
-        e.target.email.setCustomValidity(err.response.data.error)
-        //alert(err.response.data.error);
+        //e.target.email.setCustomValidity(err.response.data.error)
+        alert(err.response.data.error);
       });
-    } 
+    //} 
   };
 
   return(
@@ -45,7 +45,7 @@ export default function SingUp() {
         <form className={styles.signUpForm} onSubmit={handleSubmit}>
           <input id="email" name="email" type="email" placeholder="Email" required />
           <input id="password" name="password" type="password" placeholder="Password" minLength="3" required />
-          <input id="pswrepeat" name="pswrepeat" type="password" minLength="3" required />
+          <input id="pswrepeat" name="pswrepeat" type="password" placeholder="Repeat password" minLength="3" required />
           <button type="submit">Sign up</button>
         </form>
       </div>
