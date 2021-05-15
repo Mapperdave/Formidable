@@ -21,12 +21,15 @@ export default function Create() {
   const [ description, setDescription ] = useState('Form description');
   const [ editingDescription, setEditingDescription ] = useState(false);
 
+  const [ componentKey, setComponentKey ] = useState(0);
+
   const [ form, setForm ] = useState({
     name: name,
     description: description,
     components: [ 'multChoice' ],
+    keys: [componentKey],
     questions: [ 'Question' ],
-    options: [['Option 1']]
+    options: [ ['Option 1'] ]
   });
 
   // Updates title when name is changed
@@ -108,11 +111,13 @@ export default function Create() {
     )
   };
 
-  // TODO: Something inside the components array need to change for the component to update properly
   const renderForm = form.components.map((component, i) => {
+    
     return(
       React.createElement(Components[component], {
-        key: i,
+        key: form.keys[i],  // Uses the saved key to render the correct component
+        componentKey: componentKey,
+        setComponentKey: setComponentKey,
         id: i,
         form: form,
         setForm: setForm,

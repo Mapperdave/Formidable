@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import styles from './form.module.css'
 
-export default function MultChoice({id, form, setForm, renderEditableText}) {
+export default function MultChoice({componentKey, setComponentKey, id, form, setForm, renderEditableText}) {
 
   const [ question, setQeustion ] = useState(form.questions[id]);
   const [ editingQuestion, setEditingQuestion ] = useState(false);
@@ -21,8 +21,11 @@ export default function MultChoice({id, form, setForm, renderEditableText}) {
   const addQuestion = (e) => {
     e.preventDefault();
     
+    setComponentKey(componentKey + 1);
+
     let newForm = Object.assign({}, form); // Treats state as immutable
     newForm.components.splice(id+1, 0, 'multChoice');
+    newForm.keys.splice(id+1, 0, componentKey + 1);
     newForm.questions.splice(id+1, 0, 'Question');
     newForm.options.splice(id+1, 0, ['Option 1']);
     setForm(newForm);
