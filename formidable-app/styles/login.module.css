@@ -35,7 +35,7 @@
   color: #000505;
 }
 .logInContentBox input:focus {
-  border-color: black;
+  border-color: #000505;
   border-style: solid;
   border-width: 1px;
   outline: none;
@@ -52,6 +52,10 @@
   color: white;
   font-size: 0.9rem;
 }
+.logInContentBox button:hover {
+  background-color: #132c3d;
+  cursor: pointer;
+}
 button.providerButton {
   width: 9rem;
 
@@ -59,9 +63,12 @@ button.providerButton {
   color: #197BBD;
 }
 button.providerButton:hover {
-  border-color: #197BBD;
+  background-color: #ECF0F1;
+  color: #3da2e5;
+  border-color: #3da2e5;
   border-style: solid;
   border-width: 1px;
+  cursor: pointer;
 }
 
 form.signUpForm {

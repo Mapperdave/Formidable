@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import styles from './form.module.css'
 
-export default function MultChoice({componentKey, setComponentKey, id, form, setForm, renderEditableText}) {
+export default function FormQuestion({type, componentKey, setComponentKey, id, form, setForm, renderEditableText}) {
 
-  const [ question, setQeustion ] = useState(form.questions[id]);
+  const [ question, setQuestion ] = useState(form.questions[id]);
   const [ editingQuestion, setEditingQuestion ] = useState(false);
 
   const [ options , setOptions ] = useState([...form.options[id]]);
@@ -12,7 +12,15 @@ export default function MultChoice({componentKey, setComponentKey, id, form, set
   const renderOptions = options.map((_, i) => {
     return(
       <div key={`option_${id}_${i}`} className={styles.optionDiv}>
-        <input type='checkbox' disabled/>
+        { type === 'dropdown' ? (
+          <p>{i+1}. </p>
+        ) : (
+          type === 'checkboxes' ? (
+            <input type='checkbox' disabled/>
+          ) : (
+            <input type='radio' disabled/>
+          )
+        )}
         {renderEditableText(options, editingOptions, setOptions, setEditingOptions, 'options', id, i)}
       </div>
     )
@@ -52,8 +60,8 @@ export default function MultChoice({componentKey, setComponentKey, id, form, set
     let newForm = Object.assign({}, form);
     newForm.components[id] = e.target.value;
     if (e.target.value === 'text') {
-      setOptions([]);
-      newForm.options[id] = [];
+      setOptions([ 'Option 1' ]);
+      newForm.options[id] = [ 'Option 1' ];
     }
     setForm(newForm);
   }
@@ -62,16 +70,20 @@ export default function MultChoice({componentKey, setComponentKey, id, form, set
     <div>
       <div className={styles.questionDiv}>
         <div>
-          {renderEditableText(question, editingQuestion, setQeustion, setEditingQuestion, 'questions', id)}
+          {renderEditableText(question, editingQuestion, setQuestion, setEditingQuestion, 'questions', id)}
         </div>
         <div>
+        { type === 'text' ? (
+          <p className={styles.textAnswer}>Text answer</p>
+        ) : (
           <form>
             {renderOptions}
             <button onClick={addOption}>Add option</button>
           </form>
+        )}
         </div>
         <form>
-          <select name='setComponent' defaultValue={'checkboxes'} onChange={handleChange}>
+          <select name='setComponent' defaultValue={type} onChange={handleChange}>
             <option value='multChoice'>Multiple choice</option>
             <option value='checkboxes'>Checkboxes</option>
             <option value='dropdown'>Drop-down</option>

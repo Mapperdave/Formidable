@@ -1,17 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import Checkboxes from '../components/form/checkboxes';
-import Dropdown from '../components/form/dropdown';
-import MultChoice from '../components/form/multiple_choice';
-import Text from '../components/form/text';
 import Layout from '../components/layout';
-
-// Maps string inputs inside the form JSON-objects to different from components
-const Components = {
-  multChoice: MultChoice,
-  checkboxes: Checkboxes,
-  dropdown: Dropdown,
-  text: Text,
-}
+import styles from '../styles/Create.module.css';
+import FormQuestion from '../components/form_question';
 
 export default function Create() {
   
@@ -27,7 +17,7 @@ export default function Create() {
     name: name,
     description: description,
     components: [ 'multChoice' ],
-    keys: [componentKey],
+    keys: [ componentKey ],
     questions: [ 'Question' ],
     options: [ ['Option 1'] ]
   });
@@ -112,10 +102,10 @@ export default function Create() {
   };
 
   const renderForm = form.components.map((component, i) => {
-    
     return(
-      React.createElement(Components[component], {
+      React.createElement(FormQuestion, {
         key: form.keys[i],  // Uses the saved key to render the correct component
+        type: component,
         componentKey: componentKey,
         setComponentKey: setComponentKey,
         id: i,
@@ -133,16 +123,16 @@ export default function Create() {
 
   return(
     <Layout>
-      <div>
-        <div>
-          <div>
+      <div className={styles.createContentBox}>
+        <div className={styles.section}>
+          <div className={styles.formTitle}>
             {renderEditableText(name, editingName, setName, setEditingName, 'name')}
           </div>
-          <div>
+          <div className={styles.formDescription}>
             {renderEditableText(description, editingDescription, setDescription, setEditingDescription, 'description')}
           </div>
         </div>
-        <div>
+        <div className={styles.section}>
           {renderForm}
         </div>
         <button onClick={testFunction}>Log form state</button>

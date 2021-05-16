@@ -1,0 +1,52 @@
+.createContentBox {
+  width: 70%;
+  margin: 2rem auto;
+
+  color: #000505;
+}
+
+.section {
+  padding: 1rem;
+  margin: 1rem 0;
+
+  background-color: #ECF0F1;
+  border-radius: 0.5rem;
+}
+
+.createContentBox input{
+  font-size: inherit;
+  width: 100%;
+  padding: 0;
+
+  background-color: #ECF0F1;
+  border: none;
+}
+.createContentBox input:focus{
+  outline: none;
+}
+.createContentBox p{
+  margin: 0;
+}
+
+.formTitle {
+  font-size: 2rem;
+  margin: 0.7rem 0;
+
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid #c0cdd1;
+}
+.formTitle:focus-within {
+  border-top: 0px;
+  border-bottom: 2px solid #197BBD;
+}
+
+.formDescription {
+  margin: 0.7rem 0;
+
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid #c0cdd1;
+}
+.formDescription:focus-within {
+  border-top: 0px;
+  border-bottom: 2px solid #197BBD;
+}
