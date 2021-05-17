@@ -101,14 +101,25 @@ const options = {
   // https://next-auth.js.org/configuration/callbacks
   callbacks: {
     // async signIn(user, account, profile) { 
-    //   console.log(user);
-    //   console.log(account);
-    //   console.log(profile);
-    //   return true
+    //   // console.log(user);
+    //   // console.log(account);
+    //   // console.log(profile);
+    //   return true;
     // },
     async redirect(url, baseUrl) { return baseUrl },
-    // async session(session, user) { return session },
-    // async jwt(token, user, account, profile, isNewUser) { return token }
+    // async session(session, user) { 
+    //   console.log('User in session: \n', user);
+    //   console.log('Session in session: \n', session);
+    //   return Promise.resolve(session);
+    // },
+    // async jwt(token, user, account, profile, isNewUser) {
+    //   console.log('Token: \n', token);
+    //   console.log('User: \n', user);
+    //   console.log('Account: \n', account);
+    //   console.log('Profile: \n', profile);
+    //   console.log('isNewUser: \n', isNewUser);
+    //   return token;
+    // }
   },
 
   // Events are useful for logging

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styles from './form.module.css'
+import styles from './form_question.module.css'
 
 export default function FormQuestion({type, componentKey, setComponentKey, id, form, setForm, renderEditableText}) {
 
@@ -11,14 +11,14 @@ export default function FormQuestion({type, componentKey, setComponentKey, id, f
 
   const renderOptions = options.map((_, i) => {
     return(
-      <div key={`option_${id}_${i}`} className={styles.optionDiv}>
+      <div key={i} className={styles.optionDiv}>
         { type === 'dropdown' ? (
-          <p>{i+1}. </p>
+          <p className={styles.optionType}>{i+1}.</p>
         ) : (
           type === 'checkboxes' ? (
-            <input type='checkbox' disabled/>
+            <input type='checkbox' className={styles.optionType} disabled/>
           ) : (
-            <input type='radio' disabled/>
+            <input type='radio' className={styles.optionType} disabled/>
           )
         )}
         {renderEditableText(options, editingOptions, setOptions, setEditingOptions, 'options', id, i)}
@@ -69,20 +69,20 @@ export default function FormQuestion({type, componentKey, setComponentKey, id, f
   return(
     <div>
       <div className={styles.questionDiv}>
-        <div>
+        <div className={styles.editableText}>
           {renderEditableText(question, editingQuestion, setQuestion, setEditingQuestion, 'questions', id)}
         </div>
         <div>
         { type === 'text' ? (
           <p className={styles.textAnswer}>Text answer</p>
         ) : (
-          <form>
+          <form className={styles.optionsForm}>
             {renderOptions}
             <button onClick={addOption}>Add option</button>
           </form>
         )}
         </div>
-        <form>
+        <form className={styles.questionType}>
           <select name='setComponent' defaultValue={type} onChange={handleChange}>
             <option value='multChoice'>Multiple choice</option>
             <option value='checkboxes'>Checkboxes</option>

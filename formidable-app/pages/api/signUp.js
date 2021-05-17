@@ -1,4 +1,3 @@
-import bcrypt from 'bcryptjs';
 import { connectToDatabase } from '../../util/mongodb'
 
 export default async (req,res) => {
@@ -20,6 +19,7 @@ export default async (req,res) => {
     const newUser = {
       email: req.body.email,
       password: req.body.password,
+      forms: [],
       createAt: timestamp,
       updatedAt: timestamp
     }

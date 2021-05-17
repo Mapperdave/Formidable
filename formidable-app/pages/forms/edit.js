@@ -1,10 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import Layout from '../components/layout';
-import styles from '../styles/Create.module.css';
-import FormQuestion from '../components/form_question';
+import { getSession } from 'next-auth/client';
+import axios from 'axios';
+import Layout from '../../components/layout';
+import styles from '../../styles/Edit.module.css';
+import FormQuestion from '../../components/form_question';
 
-export default function Create() {
-  
+
+export default function Edit({ email }) {
+
   const [ name, setName ] = useState('Untitled form');
   const [ editingName, setEditingName ] = useState(false);
 
@@ -116,6 +119,17 @@ export default function Create() {
     )
   });
 
+  const saveForm = async (e) => {
+    e.preventDefault();
+
+    await axios.post('../api/save_form', {
+      email: email,
+      form: form
+    })
+    .then()
+    .catch(err => console.log(err));
+  }
+
   const testFunction = (e) => {
     e.preventDefault();
     console.log(form);
@@ -125,18 +139,35 @@ export default function Create() {
     <Layout>
       <div className={styles.createContentBox}>
         <div className={styles.section}>
-          <div className={styles.formTitle}>
+          <div className={[styles.editableText, styles.formTitle].join(' ')}>
             {renderEditableText(name, editingName, setName, setEditingName, 'name')}
           </div>
-          <div className={styles.formDescription}>
+          <div className={[styles.editableText, styles.formDescription].join(' ')}>
             {renderEditableText(description, editingDescription, setDescription, setEditingDescription, 'description')}
           </div>
         </div>
-        <div className={styles.section}>
+        <div>
           {renderForm}
         </div>
         <button onClick={testFunction}>Log form state</button>
+        <br></br>
+        <button onClick={e => saveForm(e)}>Save form</button>
       </div>
     </Layout>
   );
+}
+
+export async function getServerSideProps(context) {
+  const session = await getSession(context);
+  
+  if (!session) {
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false
+      }
+    };
+  }
+
+  return {props: { email: session.user.email }};
 }

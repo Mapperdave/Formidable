@@ -1,0 +1,47 @@
+.editableText {
+  margin: 0.7rem 0;
+
+  border-top: 1px solid transparent;
+  border-bottom: 1px solid #c0cdd1;
+}
+.editableText:focus-within {
+  border-top: 0px;
+  border-bottom: 2px solid #197BBD;
+}
+
+
+.questionDiv {
+  padding: 1rem;
+  margin: 1rem 0;
+
+  background-color: #ECF0F1;
+  border-radius: 0.5rem;
+}
+
+.optionsForm {
+  margin: 0;
+}
+.optionDiv {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: stretch;
+
+  font-size: 14px;
+}
+.optionType:first-child {
+  width: 1.5rem;
+  margin: 0;
+  padding: 0;
+}
+p.optionType {
+  text-align: center;
+}
+
+.questionType {
+  align-self: flex-end;
+}
+
+.textAnswer {
+  font-size: 14px;
+}

@@ -15,7 +15,7 @@ export default function Home() {
   if ( session || loading ) {
     return (
       <Layout>
-        <Link href="/create">
+        <Link href="/forms/edit">
           <a>Create form</a>
         </Link>
       </Layout>
