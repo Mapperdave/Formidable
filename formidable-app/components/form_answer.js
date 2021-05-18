@@ -1,55 +1,82 @@
 import React, { useState } from 'react';
-import styles from './form_question.module.css'
+
 
 export default function FormAnswer( { id, type, question, options, answer, setAnswer } ) {
 
+  const handleChange = (e) => {
+    
+    let newAnswer = Object.assign({}, answer);
+    if (type === 'text') {
+      newAnswer[id] = e.target.value;
+    } 
+    if (type === 'multChoice') {
+      newAnswer[id] = parseInt(e.target.value);
+    }
+    if (type === 'checkboxes') {
+      // Initializes new set if the first time
+      if (typeof newAnswer[id] === 'undefined') {
+        newAnswer[id] = [];
+      }
+      e.target.checked ? (
+        newAnswer[id].push(parseInt(e.target.value))
+      ) : (
+        newAnswer[id] = newAnswer[id].filter(checkbox => checkbox !== parseInt(e.target.value))
+      )
+    }
+    if (type === 'dropdown') {
+      newAnswer[id] = parseInt(e.target.value);
+    }
+    
+    setAnswer(newAnswer);
+  }
+
   const renderOptions = () => {
     return(
-      <form>
+      <>
         { type === 'dropdown' ? (
-          <select defaultValue='default'>
+          <select defaultValue='default' onChange={e => handleChange(e)}>
             <optgroup>
               <option value='default'>Choose</option>
             </optgroup>
             <optgroup required> {/*Vet inte om det funkar att göra så här med required*/}
               {options.map((opt, i) => {
-                return (<option value={i}>{opt}</option>)
+                return (<option key={i} value={i}>{opt}</option>)
               })}
             </optgroup>
           </select>
 
         ) : ( type === 'checkboxes' ? (
-          <div>
+          <>
             {options.map((opt, i) => {
               return (
-                <label>
-                  <input type='checkbox' value={i} name={id}/>
+                <label key={i} onChange={e => handleChange(e)}>
+                  <input type='checkbox' value={i}/>
                   {opt}
                   <br />
                 </label>
               )
             })}
-          </div>
+          </>
 
         ) : ( type === 'multChoice' ? (
-          <div>
+          <>
             {options.map((opt, i) => {
               return (
-                <label>
+                <label key={i} onChange={e => handleChange(e)}>
                   <input type='radio' value={i} name={id}/>
                   {opt}
                   <br />
                 </label>
               )
             })}
-          </div>
+          </>
 
         ) : (
-        <div>
-          <textarea/>
-        </div>
+        <>
+          <input type='text' onBlur={e => handleChange(e)}/>
+        </>
         )))}
-      </form>
+      </>
     )
   }
 

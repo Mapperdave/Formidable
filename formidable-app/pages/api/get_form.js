@@ -12,6 +12,6 @@ export default async (req, res) => {
     res.status(400).json( {error: 'Unexpected error'} );
     console.log(err);
   });
-  console.log(form);
+  
   res.status(200).json(form);
 }

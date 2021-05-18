@@ -1,3 +1,9 @@
+.sectionDiv {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+}
+
 .editableText {
   margin: 0.7rem 0;
 
@@ -11,6 +17,7 @@
 
 
 .questionDiv {
+  position: relative;
   padding: 1rem;
   margin: 1rem 0;
 
@@ -21,14 +28,17 @@
 .optionsForm {
   margin: 0;
 }
+
 .optionDiv {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: stretch;
 
+  margin: 0.5rem 0;
   font-size: 14px;
 }
+
 .optionType:first-child {
   width: 1.5rem;
   margin: 0;
@@ -38,10 +48,61 @@ p.optionType {
   text-align: center;
 }
 
+.optionText {
+  width: 90%;
+  border-bottom: 1px solid transparent;
+}
+.optionText:hover {
+  border-bottom: 1px solid #c0cdd1;
+}
+.optionText:focus-within {
+  border-bottom: 1px solid #197BBD;
+}
+
+.addOptButton {
+  height: 1.2rem;
+
+  background-color: #197BBD;
+  color: white;
+
+  border-radius: 3px;
+  border: 1px solid transparent;
+}
+.addOptButton:hover {
+  background-color: #3da2e5;
+}
+
 .questionType {
-  align-self: flex-end;
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;  
+}
+.questionType select {
+  height: 1.2rem;
+
+  border-radius: 3px;
+  border: 1px solid #197BBD;
+}
+.questionType select:hover {
+  cursor: pointer;
+}
+.questionType select:focus {
+  outline: none;
 }
 
 .textAnswer {
   font-size: 14px;
+}
+
+.addQuesButton {
+  height: 1.5rem;
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+  margin-left: auto;
+
+  background-color: white;
+
+  border-radius: 3px;
+  border: 1px solid #FF8811;
 }

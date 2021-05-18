@@ -83,7 +83,9 @@ export default function Edit({ email }) {
         );
       } else {
         return(
-          <p onClick={(e) => setOptionsEdit(editing, setEdit, optInd, true, e)}>{handleValue(value, optInd)}</p>
+          <p onClick={(e) => setOptionsEdit(editing, setEdit, optInd, true, e)}>
+            {handleValue(value, optInd)}
+          </p>
         )
       }
     } else {
@@ -149,9 +151,10 @@ export default function Edit({ email }) {
         <div>
           {renderForm}
         </div>
-        <button onClick={testFunction}>Log form state</button>
-        <br></br>
-        <button onClick={e => saveForm(e)}>Save form</button>
+        <div className={styles.endButtonsDiv}>
+          <button onClick={testFunction}>Log form state</button>
+          <button onClick={e => saveForm(e)}>Save form</button>
+        </div>
       </div>
     </Layout>
   );

@@ -21,7 +21,9 @@ export default function FormQuestion({type, componentKey, setComponentKey, id, f
             <input type='radio' className={styles.optionType} disabled/>
           )
         )}
-        {renderEditableText(options, editingOptions, setOptions, setEditingOptions, 'options', id, i)}
+        <div className={styles.optionText}>
+          {renderEditableText(options, editingOptions, setOptions, setEditingOptions, 'options', id, i)}
+        </div>
       </div>
     )
   });
@@ -67,7 +69,7 @@ export default function FormQuestion({type, componentKey, setComponentKey, id, f
   }
 
   return(
-    <div>
+    <div className={styles.sectionDiv}>
       <div className={styles.questionDiv}>
         <div className={styles.editableText}>
           {renderEditableText(question, editingQuestion, setQuestion, setEditingQuestion, 'questions', id)}
@@ -78,7 +80,7 @@ export default function FormQuestion({type, componentKey, setComponentKey, id, f
         ) : (
           <form className={styles.optionsForm}>
             {renderOptions}
-            <button onClick={addOption}>Add option</button>
+            <button className={styles.addOptButton} onClick={addOption}>Add option</button>
           </form>
         )}
         </div>
@@ -92,7 +94,7 @@ export default function FormQuestion({type, componentKey, setComponentKey, id, f
         </form>
       </div>
       <div>
-        <button onClick={addQuestion}>Add question</button>
+        <button className={styles.addQuesButton} onClick={addQuestion}>Add question</button>
       </div>
     </div>
   )

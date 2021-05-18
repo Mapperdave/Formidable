@@ -1,26 +1,74 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import Layout from '../../components/layout';
 import FormAnswer from '../../components/form_answer';
+import useSWR from 'swr';
 
-export default function Answer({ form }) {
+
+const fetcher = url => axios.get(url).then(res => res.data);
+
+export default function Answer() {
+ 
+  const query = '60a40494635f6018e8028eb3';
+  const url = `http://localhost:3000/api/get_form?formId=${query}`;  
+
+  const { data, error } = useSWR( url, fetcher );
+  const [ answer, setAnswer ] = useState([]);
+  const [ submitted, setSubmitted ] = useState(false);
   
-  const [ answer, setAnswer ] = useState({});
-  
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(form);
-    console.log(answer);
+  // What the user sees after submitting the form
+  if (submitted) {
+    return(
+      <div>
+        <h1>{data.name}</h1>
+        <p>Your response has been recorded.</p>
+        <a href={window.location.pathname}>Submit another response</a>
+      </div>
+    )
+  }
+  // What the user sees if loading failed
+  if (error) {
+    return(
+      <div>
+        Failed to load the form...
+      </div>
+    )
+  }
+  // What the user sees while loading
+  if (!data) {
+    return(
+      <div>
+        Loading...
+      </div>
+    )
   }
 
-  const renderQuestions = form.components.map((component, i) => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+
+    axios.post('../api/save_answer', {
+      formId: data._id,
+      answer: answer,
+      keys: data.keys
+    })
+    .then()
+    .catch(err => console.log(err));
+    setSubmitted(true);
+  }
+
+
+  const testFunction = (e) => {
+    e.preventDefault();
+    console.log(form);
+  }
+
+  const renderQuestions = data.components.map((component, i) => {
     return(
       React.createElement(FormAnswer, {
-        key: i,
-        id: i,
+        key: data.keys[i],
+        id: data.keys[i],
         type: component,
-        question: form.questions[i],
-        options: form.options[i],
+        question: data.questions[i],
+        options: data.options[i],
         answer: answer,
         setAnswer: setAnswer
       })
@@ -28,28 +76,15 @@ export default function Answer({ form }) {
   });
 
   return (
-    <Layout>
+    <div>
       <div>
-        <div>
-          <p>{form.name}</p>
-          <p>{form.description}</p>
-        </div>
-        <div>
-          {renderQuestions}
-        </div>
-        <button onClick={e => handleSubmit(e)}>Submit answer</button>
+        <p>{data.name}</p>
+        <p>{data.description}</p>
       </div>
-    </Layout>
+      <form onSubmit={e => handleSubmit(e)}>
+        {renderQuestions}
+        <input type='submit' value='Submit answer'/>
+      </form>
+    </div>
   )
-}
-
-export async function getServerSideProps(context) {
-  const form = await axios.get( `${process.env.URL}/api/get_form`, {
-    params: {
-      formId: '60a23f3a83c9e916943e5bff',
-    }
-  })
-  .catch(err => console.log(err));
-
-  return {props: { form: form.data }};
 }

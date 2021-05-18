@@ -18,7 +18,6 @@ export default async (req, res) => {
   
   const timestamp = new Date();
   let form = req.body.form;
-  delete form.keys;
   form.userId = ObjectID(userId);
   form.answers = [],
   form.createdAt = timestamp;
