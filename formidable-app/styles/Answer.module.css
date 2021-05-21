@@ -1,0 +1,56 @@
+.mobileHeader {
+  width: 100%;
+  height: 2rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #ff8811;
+  color: #3e2a35;
+}
+.mobileHeader h3{
+  margin: 0;
+}
+
+
+.loader {
+  border: 5px solid #ecf0f1;
+  border-top: 5px solid #ff8811;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 2s linear infinite;
+  visibility: visible;
+  align-self: center;
+  margin: 5rem auto;
+  display: inline-block;
+}
+
+.answerFormDiv {
+  height: 100%;
+  padding: 0.5rem;
+  margin: 0.7rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: stretch;
+  align-items: stretch;
+
+  background-color: #ecf0f1;
+  color: #000505;
+  border-radius: 0.5rem;
+}
+.answerFormDiv p {
+  margin: 7px 0 3px 0;
+}
+
+.formTitle {
+  font-size: 24px;
+  color: #3e2a35;
+}
+.formDescription {
+  font-size: 16px;
+  font-style: italic;
+  color: #3e2a35;
+}

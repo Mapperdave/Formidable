@@ -1,11 +1,15 @@
 .sectionDiv {
+  position: relative;
   display: flex;
   flex-direction: column;
   align-items: stretch;
+  margin: 1.2rem 0;
 }
 
 .editableText {
   margin: 0.7rem 0;
+  overflow-wrap: normal;
+  overflow: hidden;
 
   border-top: 1px solid transparent;
   border-bottom: 1px solid #c0cdd1;
@@ -19,7 +23,6 @@
 .questionDiv {
   position: relative;
   padding: 1rem;
-  margin: 1rem 0;
 
   background-color: #ECF0F1;
   border-radius: 0.5rem;
@@ -28,7 +31,6 @@
 .optionsForm {
   margin: 0;
 }
-
 .optionDiv {
   display: flex;
   flex-direction: row;
@@ -38,7 +40,6 @@
   margin: 0.5rem 0;
   font-size: 14px;
 }
-
 .optionType:first-child {
   width: 1.5rem;
   margin: 0;
@@ -47,9 +48,9 @@
 p.optionType {
   text-align: center;
 }
-
 .optionText {
   width: 90%;
+
   border-bottom: 1px solid transparent;
 }
 .optionText:hover {
@@ -58,9 +59,9 @@ p.optionType {
 .optionText:focus-within {
   border-bottom: 1px solid #197BBD;
 }
-
 .addOptButton {
   height: 1.2rem;
+  margin-bottom: 0.5rem;
 
   background-color: #197BBD;
   color: white;
@@ -70,11 +71,13 @@ p.optionType {
 }
 .addOptButton:hover {
   background-color: #3da2e5;
+  cursor: pointer;
+  transition-duration: 200ms;
 }
 
 .questionType {
   position: absolute;
-  bottom: 1rem;
+  bottom: 1.5rem;
   right: 1rem;  
 }
 .questionType select {
@@ -90,19 +93,34 @@ p.optionType {
   outline: none;
 }
 
-.textAnswer {
+p.textAnswer {
   font-size: 14px;
+  margin: 0.5rem 0;
+
+  font-style: italic;
+  color: #858d8f;
+
 }
 
 .addQuesButton {
+  position: absolute;
+  bottom: 1.5rem;
+  right: -6rem;  
+
   height: 1.5rem;
   display: flex;
   align-items: center;
-  margin-right: 1rem;
   margin-left: auto;
 
   background-color: white;
 
   border-radius: 3px;
   border: 1px solid #FF8811;
+
+  cursor: pointer;
+}
+.addQuesButton:hover {
+  background-color: #FF8811;
+  color: white;
+  transition-duration: 200ms;
 }

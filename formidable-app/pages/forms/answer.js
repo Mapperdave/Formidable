@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import axios from 'axios';
 import FormAnswer from '../../components/form_answer';
 import useSWR from 'swr';
-
+import styles from '../../styles/Answer.module.css'
 
 const fetcher = url => axios.get(url).then(res => res.data);
 
@@ -36,9 +36,7 @@ export default function Answer() {
   // What the user sees while loading
   if (!data) {
     return(
-      <div>
-        Loading...
-      </div>
+      <div className={styles.loader}></div>
     )
   }
 
@@ -77,14 +75,20 @@ export default function Answer() {
 
   return (
     <div>
-      <div>
-        <p>{data.name}</p>
-        <p>{data.description}</p>
+      <div className={styles.mobileHeader}>
+        <h3>FORMidable</h3>
       </div>
-      <form onSubmit={e => handleSubmit(e)}>
-        {renderQuestions}
-        <input type='submit' value='Submit answer'/>
-      </form>
+      <div className={styles.answerFormDiv}>
+        <div>
+          <p className={styles.formTitle}>{data.name}</p>
+          <p className={styles.formDescription}>{data.description}</p>
+        </div>
+        <form onSubmit={e => handleSubmit(e)}>
+          {renderQuestions}
+          <input type='submit' value='Submit answer'/>
+        </form>
+      </div>
     </div>
+
   )
 }

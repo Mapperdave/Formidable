@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-
+import styles from './form_answer.module.css';
 
 export default function FormAnswer( { id, type, question, options, answer, setAnswer } ) {
 
@@ -82,7 +82,7 @@ export default function FormAnswer( { id, type, question, options, answer, setAn
 
   return(
     <div>
-      <p>{question}</p>
+      <p className={styles.question}>{question}</p>
       {renderOptions()}
     </div>
   )

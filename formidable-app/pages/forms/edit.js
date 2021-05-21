@@ -152,7 +152,7 @@ export default function Edit({ email }) {
           {renderForm}
         </div>
         <div className={styles.endButtonsDiv}>
-          <button onClick={testFunction}>Log form state</button>
+          <button onClick={testFunction}>Discard changes</button>
           <button onClick={e => saveForm(e)}>Save form</button>
         </div>
       </div>

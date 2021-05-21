@@ -10,14 +10,27 @@ import { useSession } from 'next-auth/client';
 export default function Home() {
 
   const [ session, loading ] = useSession();
-
   
   if ( session || loading ) {
     return (
       <Layout>
-        <Link href="/forms/edit">
-          <a>Create form</a>
-        </Link>
+        <div className={styles.homeContentDiv}>
+          <div>
+            <Link href="/forms/edit">
+              <a>
+                <div className={styles.createFormButton}>Create form</div>
+              </a>
+            </Link>
+          </div>
+          <div className={styles.myFormsDiv}>
+            <h3>Published forms</h3>
+            {// Lägg till kod för att display:a forms som tar emot svar
+            }
+            <h3>Form drafts</h3>
+            {// Lägg till kod för att display:a forms som inte publicerats än
+            }
+          </div>
+        </div>
       </Layout>
     )
   }

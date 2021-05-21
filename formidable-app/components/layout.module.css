@@ -38,6 +38,14 @@
 .globalHeader h2 {
   color: #3E2A35;
 }
+.loggedInUser {
+  color: #3E2A35;
+  font-size: 14px;
+  font-style: italic;
+}
+.loggedInUser:hover {
+  cursor: default;
+}
 .globalHeader button {
   height: 100%;
   width: 4.5rem;
@@ -56,6 +64,7 @@
   border-color: #ffa244;
   color: white;
   cursor: pointer;
+  transition-duration: 200ms;
 }
 
 .buttonDiv {
@@ -81,7 +90,7 @@ button.signUpButton:hover {
   color: #FF8811;
 
   cursor: pointer;
-  transition-duration: 300ms;
+  transition-duration: 200ms;
 } 
 .backToHome {
   margin: 3rem 0 0;

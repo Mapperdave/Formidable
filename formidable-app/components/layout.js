@@ -28,7 +28,7 @@ export default function Layout({ children, home }) {
               </Link>
             )}
             {(!home && session) ? (
-              <div>{session.user.email}</div>
+              <div className={styles.loggedInUser}>{session.user.email}</div>
             ) : (
               <div/>
             )
