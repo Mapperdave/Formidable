@@ -12,7 +12,7 @@ export default function Answer() {
   const url = `http://localhost:3000/api/get_form?formId=${query}`;  
 
   const { data, error } = useSWR( url, fetcher );
-  const [ answer, setAnswer ] = useState([]);
+  const [ answer, setAnswer ] = useState({});
   const [ submitted, setSubmitted ] = useState(false);
   
   // What the user sees after submitting the form
