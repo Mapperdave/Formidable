@@ -99,23 +99,25 @@ p.textAnswer {
 
   font-style: italic;
   color: #858d8f;
-
 }
 
 .addQuesButton {
   position: absolute;
-  bottom: 1.5rem;
-  right: -6rem;  
+  bottom: 0rem;
+  right: -3.5rem;  
 
-  height: 1.5rem;
+  height: 2.5rem;
+  width: 2.5rem;
   display: flex;
   align-items: center;
-  margin-left: auto;
+  justify-content: center;
 
-  background-color: white;
+  background-color: #ecf0f1;
+  font-size: 3rem;
+  color: #197bbd;
 
-  border-radius: 3px;
-  border: 1px solid #FF8811;
+  border-radius: 3.5rem;
+  border: 2px solid transparent;
 
   cursor: pointer;
 }
@@ -123,4 +125,5 @@ p.textAnswer {
   background-color: #FF8811;
   color: white;
   transition-duration: 200ms;
+  border: 2px solid #FF8811;
 }

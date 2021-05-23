@@ -1,4 +1,6 @@
 import React from 'react';
+import styles from './form_respons.module.css'
+
 /* The component works but we get a warning bacause we change a controlled input to an uncontrolled.
 I think this has something to do with undefined state in input fields but I wont try to fix it any longer. */
 export default function FormRespons( { id, type, question, options, respons } ) {
@@ -70,8 +72,8 @@ export default function FormRespons( { id, type, question, options, respons } ) 
   }
 
   return(
-    <div>
-      <p>{question}</p>
+    <div className={styles.questionDiv}>
+      <p className={styles.question}>{question}</p>
       {renderOptions()}
     </div>
   )

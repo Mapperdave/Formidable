@@ -8,10 +8,9 @@ export default async (req, res) => {
   const { db } = await connectToDatabase();
 
   if (session) {
-
     const userId = await db
     .collection('users')
-    .findOne( { email: req.body.email } )
+    .findOne( { email: session.user.email } )
     .then(res => {
       return Promise.resolve(res._id);
     })
@@ -41,7 +40,7 @@ export default async (req, res) => {
     db
     .collection('users')
     .updateOne( 
-      { email: req.body.email }, 
+      { _id: ObjectID(userId) }, 
       { 
         $push: { forms: ObjectID(formId) },
         $set: { updatedAt: timestamp},
@@ -57,7 +56,7 @@ export default async (req, res) => {
     } else {
       res.status(403).json({
         message:
-          'You must be sign in to view the protected content on this page.',
+          'You must be sign in to save forms.',
       });
     }
   }

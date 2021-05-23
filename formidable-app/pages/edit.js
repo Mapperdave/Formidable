@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { getSession } from 'next-auth/client';
 import axios from 'axios';
-import Layout from '../../components/layout';
-import styles from '../../styles/Edit.module.css';
-import FormQuestion from '../../components/form_question';
+import Layout from '../components/layout';
+import styles from '../styles/Edit.module.css';
+import FormQuestion from '../components/form_question';
+import { useRouter } from 'next/router';
 
 
-export default function Edit({ email }) {
+export default function Edit() {
 
   const [ name, setName ] = useState('Untitled form');
   const [ editingName, setEditingName ] = useState(false);
@@ -24,6 +25,7 @@ export default function Edit({ email }) {
     questions: [ 'Question' ],
     options: [ ['Option 1'] ]
   });
+  const router = useRouter();
 
   // Updates title when name is changed
   useEffect(() => {
@@ -125,11 +127,12 @@ export default function Edit({ email }) {
     e.preventDefault();
 
     await axios.post('../api/save_form', {
-      email: email,
       form: form
     })
     .then()
     .catch(err => console.log(err));
+
+    router.push('/');
   }
 
   const testFunction = (e) => {
@@ -172,5 +175,5 @@ export async function getServerSideProps(context) {
     };
   }
 
-  return {props: { email: session.user.email }};
+  return {props: {}};
 }

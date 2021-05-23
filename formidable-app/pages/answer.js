@@ -1,34 +1,28 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import FormAnswer from '../../components/form_answer';
+import FormAnswer from '../components/form_answer';
 import useSWR from 'swr';
-import styles from '../../styles/Answer.module.css'
+import styles from '../styles/Answer.module.css'
+import { useRouter } from 'next/router';
 
 const fetcher = url => axios.get(url).then(res => res.data);
 
 export default function Answer() {
  
-  const query = '60a40494635f6018e8028eb3';
+  // const router = useRouter();
+  // const query = router.query.form; 
+  // const query = '60a40494635f6018e8028eb3'; // Måns
+  const query = '60aa93f9ac3c4b19f034ab58'; // Vera
   const url = `http://localhost:3000/api/get_form?formId=${query}`;  
 
   const { data, error } = useSWR( url, fetcher );
   const [ answer, setAnswer ] = useState({});
   const [ submitted, setSubmitted ] = useState(false);
   
-  // What the user sees after submitting the form
-  if (submitted) {
-    return(
-      <div>
-        <h1>{data.name}</h1>
-        <p>Your response has been recorded.</p>
-        <a href={window.location.pathname}>Submit another response</a>
-      </div>
-    )
-  }
   // What the user sees if loading failed
   if (error) {
     return(
-      <div>
+      <div className={styles.centerDiv}>
         Failed to load the form...
       </div>
     )
@@ -36,7 +30,9 @@ export default function Answer() {
   // What the user sees while loading
   if (!data) {
     return(
-      <div className={styles.loader}></div>
+      <div className={styles.centerDiv}>
+        <div className={styles.loader}></div>
+      </div>
     )
   }
 
@@ -51,12 +47,6 @@ export default function Answer() {
     .then()
     .catch(err => console.log(err));
     setSubmitted(true);
-  }
-
-
-  const testFunction = (e) => {
-    e.preventDefault();
-    console.log(form);
   }
 
   const renderQuestions = data.components.map((component, i) => {
@@ -79,16 +69,25 @@ export default function Answer() {
         <h3>FORMidable</h3>
       </div>
       <div className={styles.answerFormDiv}>
-        <div>
-          <p className={styles.formTitle}>{data.name}</p>
-          <p className={styles.formDescription}>{data.description}</p>
-        </div>
-        <form onSubmit={e => handleSubmit(e)}>
-          {renderQuestions}
-          <input type='submit' value='Submit answer'/>
-        </form>
+        {submitted ? (
+          <>
+            <h1 className={styles.formTitle}>{data.name}</h1>
+            <p className={styles.formDescription}>Your response has been recorded.</p>
+            <a href={window.location.pathname}>Submit another response</a>
+          </>
+        ) : (
+          <>
+            <div>
+              <p className={styles.formTitle}>{data.name}</p>
+              <p className={styles.formDescription}>{data.description}</p>
+            </div>
+            <form onSubmit={e => handleSubmit(e)}>
+              {renderQuestions}
+              <input type='submit' value='Submit answer'/>
+            </form>
+          </>
+        )} 
       </div>
     </div>
-
   )
 }

@@ -1,0 +1,48 @@
+.mainDiv {
+  width: 70%;
+  margin: 1rem auto;
+}
+
+.responsesDiv {
+  width: 100%;
+  padding: 1rem;
+  margin: 1rem 0;
+  border: #197bbd 2px solid
+}
+
+.respInfoDiv {
+  height: 2rem;
+  margin: 1.5rem 0;
+
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+}
+.respInfoDiv div:last-child {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.respInfoDiv div:last-child button {
+  width: 2rem;
+  padding: 0.2rem;
+  margin: 0 1rem;
+  text-align: center;
+
+  font-size: 1rem;
+  background-color: #197bbd;
+  color: white;
+  border: none;
+  border-radius: 1.2rem;
+}
+.respInfoDiv div:last-child button:enabled:hover {
+  cursor: pointer;
+}
+.respInfoDiv div:last-child button:disabled {
+  visibility: hidden;
+}
+.respInfoDiv div:last-child p {
+  width: 3rem;
+  text-align: center;
+}

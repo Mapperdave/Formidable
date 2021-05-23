@@ -94,7 +94,7 @@ export default function FormQuestion({type, componentKey, setComponentKey, id, f
         </form>
       </div>
       <div>
-        <button className={styles.addQuesButton} onClick={addQuestion}>Add question</button>
+        <button className={styles.addQuesButton} onClick={addQuestion}>+</button>
       </div>
     </div>
   )
