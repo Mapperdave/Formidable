@@ -9,11 +9,9 @@ const fetcher = url => axios.get(url).then(res => res.data);
 
 export default function Answer() {
  
-  // const router = useRouter();
-  // const query = router.query.form; 
-  // const query = '60a40494635f6018e8028eb3'; // Måns
-  const query = '60aa93f9ac3c4b19f034ab58'; // Vera
-  const url = `http://localhost:3000/api/get_form?formId=${query}`;  
+  const router = useRouter();
+  const query = router.query.form; 
+  const url = `http://localhost:3000/api/get_form?form=${query}`;  
 
   const { data, error } = useSWR( url, fetcher );
   const [ answer, setAnswer ] = useState({});
@@ -73,7 +71,7 @@ export default function Answer() {
           <>
             <h1 className={styles.formTitle}>{data.name}</h1>
             <p className={styles.formDescription}>Your response has been recorded.</p>
-            <a href={window.location.pathname}>Submit another response</a>
+            <a href={`${window.location.pathname}?form=${query}`}>Submit another response</a>
           </>
         ) : (
           <>

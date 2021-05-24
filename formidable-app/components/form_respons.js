@@ -1,10 +1,9 @@
 import React from 'react';
 import styles from './form_respons.module.css'
 
-/* The component works but we get a warning bacause we change a controlled input to an uncontrolled.
-I think this has something to do with undefined state in input fields but I wont try to fix it any longer. */
+
 export default function FormRespons( { id, type, question, options, respons } ) {
-  // console.log(respons[id]);
+
   const renderOptions = () => {
     return(
       <>
@@ -27,18 +26,19 @@ export default function FormRespons( { id, type, question, options, respons } ) 
                     <br/>
                   </label>
                 )
+              } else {
+                return (
+                  <label key={i}>
+                    {respons[id].includes(i) ? (
+                      <input type='checkbox' disabled checked/>
+                      ) : ( 
+                        <input type='checkbox' disabled checked={false}/>
+                        )}
+                    {opt}
+                    <br />
+                  </label>
+                )
               }
-              return (
-                <label key={i}>
-                  {respons[id].includes(i) ? (
-                    <input type='checkbox' disabled checked/>
-                  ) : ( 
-                    <input type='checkbox' disabled checked={false}/>
-                  )}
-                  {opt}
-                  <br />
-                </label>
-              )
             })}
           </>
 

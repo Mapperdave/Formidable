@@ -101,29 +101,32 @@ p.textAnswer {
   color: #858d8f;
 }
 
+.delQuesButton {
+  position: absolute;
+  bottom: 0rem;
+  right: -3rem;  
+  height: 7rem;
+  width: 2rem;
+
+  font-size: 2rem;
+  color: #c0cdd1;
+  background-color: white;
+  border:none;
+}
 .addQuesButton {
   position: absolute;
   bottom: 0rem;
-  right: -3.5rem;  
+  right: -3rem;  
+  height: 2rem;
+  width: 2rem;
 
-  height: 2.5rem;
-  width: 2.5rem;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background-color: #ecf0f1;
-  font-size: 3rem;
+  font-size: 2rem;
   color: #197bbd;
-
-  border-radius: 3.5rem;
-  border: 2px solid transparent;
-
-  cursor: pointer;
+  background-color: white;
+  border:none;
 }
-.addQuesButton:hover {
-  background-color: #FF8811;
-  color: white;
-  transition-duration: 200ms;
-  border: 2px solid #FF8811;
+.addQuesButton:hover, 
+.delQuesButton:hover {
+  cursor: pointer;
+  color: #FF8811;
 }

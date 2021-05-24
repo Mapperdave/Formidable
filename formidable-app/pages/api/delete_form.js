@@ -4,50 +4,63 @@ import { getSession } from 'next-auth/client';
 
 export default async (req, res) => {
 
-  const session = await getSession({ req });
   const { db } = await connectToDatabase();
+  const session = await getSession({ req });
 
+  // console.log(req.body);
   if (session) {
 
     // This check is to see if the signed in user owns the requested form
-    const reqUser = await db
-    .collection('users')
-    .findOne( { forms: {$in: [ObjectID(req.query.form)]} } )
+    const form = await db
+    .collection('forms')
+    .findOne( { _id: ObjectID(req.body.formId)} )
     .catch(err => {
       res.status(400).json( {error: 'Unexpected error'} );
       console.log(err);
     });
-    
-    if (session.user.email !== reqUser.email) {
+
+    const user = await db
+    .collection('users')
+    .findOne( { email: session.user.email } )
+    .catch(err => {
+      res.status(400).json( {error: 'Unexpected error'} );
+      console.log(err);
+    });
+   
+    if (String(form.userId) != String(user._id)) {
       res.status(403).json({
         message:
           'No form id matching the request.',
       });
     } else {
 
-      // Returns the form and it's responses
-      const form = await db
-      .collection('forms')
-      .findOne( { _id: ObjectID(req.query.form) } )
+      db
+      .collection('form_answers')
+      .deleteMany(
+        { _id: { $in: form.answers}}
+      )
       .catch(err => {
         res.status(400).json( {error: 'Unexpected error'} );
         console.log(err);
       });
-      
-      const cursor = await db
-      .collection('form_answers')
-      .find({_id: {$in: form.answers}});
-      
-      let responses = [];
-      await cursor.forEach(r => responses.push(r));
 
-      res.status(200).json({form: form, responses: responses});
-      
+      db
+      .collection('forms')
+      .deleteOne(
+        { _id: ObjectID(req.body.formId) }
+      )
+      .catch(err => {
+        res.status(400).json( {error: 'Unexpected error'} );
+        console.log(err);
+      });
+
+      res.status(200).send();
     }
+
   } else {
     res.status(403).json({
       message:
-      'You must be sign in to view the protected content on this page.',
+        'You must be signed in.',
     });
   }
 }

@@ -1,0 +1,33 @@
+.mainDiv {
+  display: flex;
+  flex-direction: column;
+}
+
+.sharingDiv {
+  margin: 2rem auto;
+  padding: 5rem;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  background-color: #ecf0f1;
+}
+.sharingDiv div {
+  margin: 1rem 0;
+}
+.sharingDiv div:last-child button{
+  padding: 0.5rem;
+
+  font-size: 1rem;
+  background-color: #197bbd;
+  color: white;
+
+  border: none;
+  border-radius: 0.3rem;
+}
+.sharingDiv div:last-child button:hover{
+  background-color: #3da2e5;
+  color: white;
+}

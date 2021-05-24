@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import styles from './form_question.module.css'
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlusCircle, faMinusCircle } from "@fortawesome/free-solid-svg-icons";
 
 export default function FormQuestion({type, componentKey, setComponentKey, id, form, setForm, renderEditableText}) {
 
@@ -41,6 +43,17 @@ export default function FormQuestion({type, componentKey, setComponentKey, id, f
     setForm(newForm);
   }
 
+  const deleteQuestion = (e) => {
+    e.preventDefault();
+    
+    let newForm = Object.assign({}, form);
+    newForm.components.splice(id, 1);
+    newForm.keys.splice(id, 1);
+    newForm.questions.splice(id, 1);
+    newForm.options.splice(id, 1);
+    setForm(newForm);
+  }
+  
   const addOption = (e) => {
     e.preventDefault();
     const nOptions = options.length;
@@ -94,7 +107,14 @@ export default function FormQuestion({type, componentKey, setComponentKey, id, f
         </form>
       </div>
       <div>
-        <button className={styles.addQuesButton} onClick={addQuestion}>+</button>
+      { form.questions.length > 1 && (
+          <button className={styles.delQuesButton} onClick={deleteQuestion}>
+            <FontAwesomeIcon icon={faMinusCircle}></FontAwesomeIcon>
+          </button>
+      )}
+        <button className={styles.addQuesButton} onClick={addQuestion}>
+          <FontAwesomeIcon icon={faPlusCircle}></FontAwesomeIcon>
+        </button>
       </div>
     </div>
   )

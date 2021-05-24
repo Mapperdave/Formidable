@@ -5,7 +5,7 @@ import Layout from '../components/layout';
 import styles from '../styles/Edit.module.css';
 import FormQuestion from '../components/form_question';
 import { useRouter } from 'next/router';
-
+import Link from 'next/link'
 
 export default function Edit() {
 
@@ -127,7 +127,8 @@ export default function Edit() {
     e.preventDefault();
 
     await axios.post('../api/save_form', {
-      form: form
+      form: form,
+      published: false
     })
     .then()
     .catch(err => console.log(err));
@@ -135,9 +136,17 @@ export default function Edit() {
     router.push('/');
   }
 
-  const testFunction = (e) => {
+  const publishForm = async (e) => {
     e.preventDefault();
-    console.log(form);
+    
+    const formId = await axios.post('../api/save_form', {
+      form: form,
+      published: true
+    })
+    .then(res => res.data)
+    .catch(err => console.log(err));
+
+    router.push(`/publish?form=${formId}`);
   }
 
   return(
@@ -155,8 +164,13 @@ export default function Edit() {
           {renderForm}
         </div>
         <div className={styles.endButtonsDiv}>
-          <button onClick={testFunction}>Discard changes</button>
-          <button onClick={e => saveForm(e)}>Save form</button>
+            <Link href="/">
+              <a>
+                <button>Discard</button>
+              </a>
+            </Link>
+          <button onClick={e => saveForm(e)}>Save</button>
+          <button onClick={e => publishForm(e)}>Save and publish</button>
         </div>
       </div>
     </Layout>

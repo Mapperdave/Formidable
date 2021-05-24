@@ -1,5 +1,5 @@
-import { connectToDatabase } from '../../util/mongodb'
-import { ObjectID } from 'mongodb'
+import { connectToDatabase } from '../../util/mongodb';
+import { ObjectID } from 'mongodb';
 
 export default async (req, res) => {
 
@@ -24,6 +24,7 @@ export default async (req, res) => {
     console.log(err);
   });
   
+
   db
   .collection('forms')
   .updateOne( 

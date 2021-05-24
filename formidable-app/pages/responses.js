@@ -15,7 +15,7 @@ export default function Responses() {
  
   const router = useRouter();
   const query = router.query.form; 
-  const url = `http://localhost:3000/api/get_responses?formId=${query}`;
+  const url = `http://localhost:3000/api/get_responses?form=${query}`;
 
   const { data, error } = useSWR( url, fetcher );
 
@@ -68,7 +68,7 @@ export default function Responses() {
         {resId === nRes-1 ? (
           <button disabled>{">"}</button>
         ) : (
-          <button onClick={(e) => {setResId(resId+1)}}>{">"}</button>
+          <button onClick={() => {setResId(resId+1)}}>{">"}</button>
         )}
       </div>
     )
@@ -105,7 +105,7 @@ export default function Responses() {
                 {data.form.components.map((component, i) => {
                   return (
                     React.createElement(FormRespons, {
-                      key: i,
+                      key: `${resId}_${i}`,
                       id: data.form.keys[i],
                       type: component,
                       question: data.form.questions[i],

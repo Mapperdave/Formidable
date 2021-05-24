@@ -19,10 +19,12 @@ export default async (req, res) => {
 
     const cursor = await db
     .collection('forms')
-    .find({'_id': {'$in': user.forms}});
+    .find(
+      { userId: user._id }
+    );
 
     let forms = [];
-    await cursor.forEach(form => forms.push({_id: form._id, name: form.name}));
+    await cursor.forEach(form => forms.push({_id: form._id, name: form.name, published: form.published}));
     res.status(200).json(forms);
 
   }  else {

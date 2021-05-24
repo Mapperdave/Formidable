@@ -14,25 +14,24 @@ export default function Layout({ children, home }) {
 
   return (
     <div className={styles.container}>
-      <Head>
-        
-      </Head>
+      <Head></Head>
       <header>
         <div className={styles.globalHeader}>
           <>
             {!home && (
-              <Link href="/">
-                <a>
-                  <h2 className={utilStyles.headingLg}>{name}</h2>
-                </a>
-              </Link>
+              <div>
+                <Link href="/">
+                  <a>
+                    <h2 className={utilStyles.headingLg}>{name}</h2>
+                  </a>
+                </Link>
+              </div>
             )}
             {(!home && session) ? (
               <div className={styles.loggedInUser}>{session.user.email}</div>
             ) : (
               <div/>
-            )
-            }
+            )}
             <div className={styles.buttonDiv}>
               {!session ? (
                 <>
@@ -67,16 +66,8 @@ export default function Layout({ children, home }) {
             </div>
           </div>
         )}
-        
       </header>
       <main>{children}</main>
-      {/*!home && (
-        <div className={styles.backToHome}>
-          <Link href="/">
-            <a>← Back to home</a>
-          </Link>
-        </div>
-      )*/}
     </div>
   )
 }

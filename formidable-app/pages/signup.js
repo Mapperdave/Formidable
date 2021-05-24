@@ -22,7 +22,7 @@ export default function SingUp() {
       const saltRounds = 10;
       const hash = await bcrypt.hash(password, saltRounds);
 
-      await axios.post('./api/signup', {
+      await axios.post('./api/auth/save_user', {
         email: email,
         password: hash
       })

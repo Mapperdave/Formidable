@@ -60,10 +60,15 @@
 
   font-size: 16px;
   background-color: white;
-  color: #3e2a35;
+  color: #FF8811;
   
   border-radius: 5px;
-  border: 1px solid #ffa244;;
+  border: 1px solid #FF8811;;
+}
+.endButtonsDiv a button:first-child {
+  background-color: white;
+  color: #c0cdd1;
+  border-color: #c0cdd1;
 }
 .endButtonsDiv button:last-child {
   background-color: #FF8811;
@@ -71,12 +76,14 @@
   border-color: #FF8811;
 }
 .endButtonsDiv button:hover{
-  color: #FF8811;
+  background-color: #197BBD;
+  color: white;
+  border-color: #197BBD;
   cursor: pointer;
 }
-.endButtonsDiv button:last-child:hover {
-  background-color: #ffa244;
-  border-color: #ffa244;
+.endButtonsDiv a button:first-child:hover {
+  background-color: #197BBD;
   color: white;
+  border-color: #197BBD;
 }
 

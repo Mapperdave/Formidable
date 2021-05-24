@@ -23,6 +23,7 @@ export default async (req, res) => {
     let form = req.body.form;
     form.userId = ObjectID(userId);
     form.answers = [],
+    form.published = req.body.published,
     form.createdAt = timestamp;
     form.updatedAt = timestamp;
     
@@ -52,7 +53,7 @@ export default async (req, res) => {
         console.log(err);
       });
       
-      res.status(200).send();
+      res.status(200).json(formId);
     } else {
       res.status(403).json({
         message:
