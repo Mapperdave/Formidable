@@ -5,7 +5,7 @@ import Layout from '../components/layout';
 import styles from '../styles/Edit.module.css';
 import FormQuestion from '../components/form_question';
 import { useRouter } from 'next/router';
-import Link from 'next/link'
+import Link from 'next/link';
 
 export default function Edit() {
 
@@ -25,12 +25,14 @@ export default function Edit() {
     questions: [ 'Question' ],
     options: [ ['Option 1'] ]
   });
-  const router = useRouter();
-
+  
   // Updates title when name is changed
   useEffect(() => {
+    console.log(name);
     document.title = `${name} - FORMidable`;
-  },[name]);
+  }, [name]);
+  
+  const router = useRouter();
 
   const handleChange = (event, value, setValue, id, optInd) => {
     let newForm = Object.assign({}, form);

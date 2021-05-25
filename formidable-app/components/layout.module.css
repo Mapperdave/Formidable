@@ -2,26 +2,6 @@
   width: 100%;
   height: 100%;
 }
-  
-.homeHeader {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-
-  position: relative;
-  height: 22rem;
-}
-.homeHeader img {
-  filter: opacity(90%);
-}
-.homeHeader div {
-  position: absolute;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  display: flex;
-}
 
 .globalHeader {
   height: 2.8rem;

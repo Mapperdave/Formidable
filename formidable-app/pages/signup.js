@@ -11,11 +11,12 @@ export default function SingUp() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    /*console.log(e.target)
+    console.log(e.target)
     if(e.target.password.value != e.target.pswrepeat.value) {
       //e.target.pswrepeat.setCustomValidity("Passwords must match.")
+      alert("Passwords must match.");
     }
-    else {*/
+    else {
       const email = document.getElementById("email").value;
       const password = document.getElementById("password").value;
 
@@ -32,7 +33,7 @@ export default function SingUp() {
         //e.target.email.setCustomValidity(err.response.data.error)
         alert(err.response.data.error);
       });
-    //} 
+    } 
   };
 
   return(

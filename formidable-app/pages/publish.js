@@ -4,7 +4,7 @@ import Layout from '../components/layout';
 import Link from 'next/link'
 import styles from '../styles/Publish.module.css'
 import { getSession } from 'next-auth/client';
-
+import Head from 'next/head';
 
 export default function Publish() {
  
@@ -25,15 +25,22 @@ export default function Publish() {
 
   return(
     <Layout>
+      <Head>
+        <title>{'Share Form - FORMidable'}</title>
+      </Head>
       <div className={styles.mainDiv}>
         <Link href="/">
           <a>← Back to home</a>
         </Link>
         <div className={styles.sharingDiv}>
+          <p>Scan this QR-code to start answering the form</p>
           <div>
             <QRCode value={url} renderAs='svg' size={200}/>
           </div>
-          <div>OR</div>
+          <div>
+            OR
+          </div>
+          copy and share the address
           <div>
             <button onClick={(e) => copyUrlToClipboard(e)}>
                 Copy address

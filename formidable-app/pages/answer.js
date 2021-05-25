@@ -4,6 +4,7 @@ import FormAnswer from '../components/form_answer';
 import useSWR from 'swr';
 import styles from '../styles/Answer.module.css'
 import { useRouter } from 'next/router';
+import Head from 'next/head';
 
 const fetcher = url => axios.get(url).then(res => res.data);
 
@@ -20,16 +21,26 @@ export default function Answer() {
   // What the user sees if loading failed
   if (error) {
     return(
-      <div className={styles.centerDiv}>
-        Failed to load the form...
+      <div>
+        <div className={styles.mobileHeader}>
+          <h3>FORMidable</h3>
+        </div>
+        <div className={styles.centerDiv}>
+          Failed to load the form...
+        </div>
       </div>
     )
   }
   // What the user sees while loading
   if (!data) {
     return(
-      <div className={styles.centerDiv}>
-        <div className={styles.loader}></div>
+      <div>
+        <div className={styles.mobileHeader}>
+          <h3>FORMidable</h3>
+        </div>
+        <div className={styles.centerDiv}>
+          <div className={styles.loader}></div>
+        </div>
       </div>
     )
   }
@@ -63,6 +74,9 @@ export default function Answer() {
 
   return (
     <div>
+      <Head>
+        <title>{`Answer ${data.name} - FORMidable`}</title>
+      </Head>
       <div className={styles.mobileHeader}>
         <h3>FORMidable</h3>
       </div>

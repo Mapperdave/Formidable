@@ -29,7 +29,7 @@
 .myFormsDiv {
   margin: 2rem auto;
   padding: 1rem;
-  width: 100%;
+  width: 85%;
 
   background-color: #ECF0F1;
 }
@@ -37,4 +37,48 @@
   margin: 1rem 0;
 
   color: #c0cdd1;
+}
+
+.homeHeader {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  position: relative;
+  height: 15rem;
+
+  background-color: #ecf0f1;
+}
+.homeHeader div {
+  position: absolute;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  display: flex;
+}
+
+.infoRowsDiv {
+  margin-top: 1rem;
+  padding: 0 1.5rem;
+  background-color: #ecf0f1;
+}
+
+.infoRow {
+  margin: 1.5rem auto;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+}
+.infoRow div:first-child {
+  margin-right: 1.5rem;
+}
+
+.icon {
+  width: 2rem;
+  text-align: center;
+
+  color: #197bbd;
 }

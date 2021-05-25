@@ -8,6 +8,7 @@ import styles from '../styles/Responses.module.css';
 import Layout from '../components/layout';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import Head from 'next/head';
 
 const fetcher = url => axios.get(url).then(res => res.data);
 
@@ -76,6 +77,9 @@ export default function Responses() {
 
   return (
     <Layout>
+      <Head>
+        <title>{`${data.form.name} - FORMidable`}</title>
+      </Head>
       <div className={styles.mainDiv}>
         <Link href="/">
           <a>← Back to home</a>
