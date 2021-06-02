@@ -46,3 +46,19 @@
   width: 3rem;
   text-align: center;
 }
+.loader {
+  border: 5px solid #ecf0f1;
+  border-top: 5px solid #ff8811;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  animation: spin 2s linear infinite;
+  visibility: visible;
+  align-self: center;
+  margin: 5rem auto;
+  display: inline-block;
+}
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

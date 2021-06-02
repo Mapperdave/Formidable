@@ -12,7 +12,7 @@ const fetcher = url => axios.get(url).then(res => res.data);
 export default function FormsList({ published }) {
 
   const router = useRouter();
-  const { data, error, mutate } = useSWR( 'http://localhost:3000/api/get_all_forms', fetcher );
+  const { data, error, mutate } = useSWR( '../api/get_all_forms', fetcher );
   
   const updatePublish = (id) => {
 

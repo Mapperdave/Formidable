@@ -10,13 +10,14 @@ import { useRouter } from 'next/router';
 import Link from 'next/link';
 import Head from 'next/head';
 
+
 const fetcher = url => axios.get(url).then(res => res.data);
 
 export default function Responses() {
  
   const router = useRouter();
   const query = router.query.form; 
-  const url = `http://localhost:3000/api/get_responses?form=${query}`;
+  const url = `../api/get_responses?form=${query}`;
 
   const { data, error } = useSWR( url, fetcher );
 

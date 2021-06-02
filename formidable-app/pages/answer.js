@@ -12,7 +12,7 @@ export default function Answer() {
  
   const router = useRouter();
   const query = router.query.form; 
-  const url = `http://localhost:3000/api/get_form?form=${query}`;  
+  const url = `../api/get_form?form=${query}`;  
 
   const { data, error } = useSWR( url, fetcher );
   const [ answer, setAnswer ] = useState({});
