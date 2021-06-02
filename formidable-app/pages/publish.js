@@ -10,7 +10,7 @@ export default function Publish() {
  
   const router = useRouter();
   const query = router.query.form; 
-  const url = `http://localhost:3000/answer?form=${query}`;
+  const url = `https://formidable-tan.vercel.app/answer?form=${query}`;
 
   const copyUrlToClipboard = (e) => {
     e.preventDefault();
